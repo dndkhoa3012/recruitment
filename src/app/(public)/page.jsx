@@ -117,12 +117,12 @@ export default function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <button className="flex w-fit cursor-pointer items-center justify-center rounded-full h-12 px-8 bg-slate-900 hover:bg-slate-800 transition-all text-white text-sm font-bold mt-4 group shadow-lg shadow-slate-200">
+                                <Link href="/about" className="flex w-fit cursor-pointer items-center justify-center rounded-full h-12 px-8 bg-slate-900 hover:bg-slate-800 transition-all text-white text-sm font-bold mt-4 group shadow-lg shadow-slate-200">
                                     <span className="truncate">Câu chuyện của chúng tôi</span>
                                     <span className="material-symbols-outlined ml-2 text-sm group-hover:translate-x-1 transition-transform">
                                         arrow_forward
                                     </span>
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

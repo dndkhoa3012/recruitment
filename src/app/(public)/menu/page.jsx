@@ -109,14 +109,11 @@ export default function MenuPage() {
                                     <div key={idx} className="group flex flex-col gap-4 p-4 rounded-2xl bg-white hover:shadow-xl hover:shadow-slate-200 hover:-translate-y-1 transition-all duration-300 border border-slate-100">
                                         <div className="w-full relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-50">
                                             <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url("${drink.image}")` }}></div>
-                                            <button className="absolute bottom-3 right-3 size-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-green-500/30 hover:bg-green-500 hover:scale-110 transition-transform">
-                                                <span className="material-symbols-outlined">add</span>
-                                            </button>
+
                                         </div>
                                         <div>
                                             <div className="flex justify-between items-start mb-1">
                                                 <p className="text-slate-900 text-lg font-bold leading-normal group-hover:text-primary transition-colors">{drink.name}</p>
-                                                <p className="text-primary font-bold text-lg leading-normal">{drink.price}</p>
                                             </div>
                                             <p className="text-slate-500 text-sm font-normal leading-relaxed line-clamp-2">{drink.desc}</p>
                                         </div>
@@ -139,13 +136,10 @@ export default function MenuPage() {
                                             <div>
                                                 <div className="flex justify-between">
                                                     <p className="text-slate-900 text-base font-bold leading-normal group-hover:text-primary transition-colors">{food.name}</p>
-                                                    <p className="text-primary text-base font-bold">{food.price}</p>
                                                 </div>
                                                 <p className="text-slate-500 text-sm font-normal mt-1 line-clamp-2">{food.desc}</p>
                                             </div>
-                                            <button className="self-start text-xs font-bold text-primary bg-slate-50 px-4 py-1.5 rounded-full mt-2 group-hover:bg-primary group-hover:text-white transition-all">
-                                                Thêm vào giỏ
-                                            </button>
+
                                         </div>
                                     </div>
                                 ))}

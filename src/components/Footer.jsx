@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { Facebook, Instagram } from 'lucide-react';
 
 export default function Footer() {
     return (
@@ -8,21 +9,19 @@ export default function Footer() {
                 <div className="px-4 md:px-10 w-full max-w-[1200px] grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     <div className="col-span-1 md:col-span-1 flex flex-col gap-6">
                         <div className="flex items-center gap-2 text-slate-900">
-                            <img src="/logo.jpg" alt="Airwave Beach Club" className="h-16 w-auto object-contain" />
+                            <img src="/logo.png" alt="Airwave Beach Club" className="h-16 w-auto object-contain" />
                         </div>
                         <p className="text-slate-500 text-sm leading-relaxed">Điểm đến giải trí hàng đầu tại Phú Quốc, nơi cảm xúc thăng hoa cùng sóng biển.</p>
                         <div className="flex gap-4">
-                            <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary hover:border-primary hover:text-slate-900 transition-all" href="#">
-                                <span className="text-xs font-bold">FB</span>
+                            <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all shadow-sm" href="https://www.facebook.com/airwavesbeachclub" target="_blank" rel="noopener noreferrer">
+                                <Facebook size={18} strokeWidth={2.5} />
                             </a>
-                            <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary hover:border-primary hover:text-slate-900 transition-all" href="#">
-                                <span className="text-xs font-bold">IG</span>
-                            </a>
-                            <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary hover:border-primary hover:text-slate-900 transition-all" href="#">
-                                <span className="text-xs font-bold">TT</span>
+                            <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#E4405F] hover:border-[#E4405F] hover:text-white transition-all shadow-sm" href="#">
+                                <Instagram size={18} strokeWidth={2.5} />
                             </a>
                         </div>
                     </div>
+
                     <div className="col-span-1">
                         <h4 className="text-slate-900 font-bold mb-6 text-base">Khám phá</h4>
                         <ul className="flex flex-col gap-3 text-slate-500 text-sm">
@@ -37,11 +36,11 @@ export default function Footer() {
                         <ul className="flex flex-col gap-4 text-slate-500 text-sm">
                             <li className="flex items-start gap-3">
                                 <span className="material-symbols-outlined text-primary text-lg mt-0.5">location_on</span>
-                                <span>123 Đường Trần Hưng Đạo, Dương Tơ, Phú Quốc, Kiên Giang</span>
+                                <span>Dự án Khu Lan Anh, Tổ 1, Khu Phố Cửa Lấp, Đặc khu Phú Quốc, Tỉnh An Giang, Việt Nam</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary text-lg">call</span>
-                                <span>+84 912 345 678</span>
+                                <span>+84 948 222 111</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary text-lg">schedule</span>
@@ -59,13 +58,13 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="w-full max-w-[1200px] px-4 md:px-10 border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-slate-400 text-xs font-medium">© 2024 Airwave Beach Club Phu Quoc. All rights reserved.</p>
+                    <p className="text-slate-400 text-xs font-medium">© 2026 Airwaves Beach Club. All rights reserved.</p>
                     <div className="flex gap-8 text-slate-400 text-xs font-medium">
                         <a className="hover:text-slate-900 transition-colors" href="#">Điều khoản</a>
                         <a className="hover:text-slate-900 transition-colors" href="#">Chính sách bảo mật</a>
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 }

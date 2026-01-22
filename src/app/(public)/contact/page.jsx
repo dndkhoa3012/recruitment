@@ -38,8 +38,8 @@ export default function ContactPage() {
                                             <div>
                                                 <span className="block text-slate-900 font-bold mb-1">Địa chỉ</span>
                                                 <p className="text-slate-500 text-sm leading-relaxed">
-                                                    123 Đường Trần Hưng Đạo, Dương Tơ,<br />
-                                                    Phú Quốc, Kiên Giang, Việt Nam
+                                                    Dự án Khu Lan Anh, Tổ 1, Khu Phố Cửa Lấp,<br />
+                                                    Đặc khu Phú Quốc, Tỉnh An Giang, Việt Nam
                                                 </p>
                                             </div>
                                         </div>
