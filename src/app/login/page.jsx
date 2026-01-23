@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { GravityStars } from '@/components/GravityStars';
+import { GravityStars } from '@/components/public/GravityStars';
 import { Input, Button, Form } from 'antd';
 import { LockOutlined, UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import Link from 'next/link';
