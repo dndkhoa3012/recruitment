@@ -28,25 +28,6 @@ export default function EventsPage() {
                         />
                     </div>
                     <div className="relative z-10 flex flex-col gap-6 max-w-[800px] animate-fade-in-up">
-                        <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mx-auto shadow-sm">
-                            <span className="material-symbols-outlined text-green-400 text-sm">water_drop</span>
-                            <span className="text-white text-xs font-bold uppercase tracking-widest">Nightlife Phú Quốc</span>
-                        </div>
-                        <h1 className="text-white text-5xl md:text-7xl font-black leading-tight tracking-tight drop-shadow-2xl">
-                            Nhịp Đập Của <br /><span className="text-green-400">Biển Xanh</span>
-                        </h1>
-                        <p className="text-slate-100 text-lg md:text-xl font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-lg">
-                            Hòa mình vào làn gió biển mát lạnh, âm nhạc sôi động và những ly cocktail màu xanh ngọc bích tuyệt đẹp.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-                            <button className="flex items-center justify-center h-12 px-8 rounded-full bg-primary text-white font-bold text-base hover:bg-white hover:text-primary transition-all duration-300 shadow-xl shadow-green-900/20 hover:-translate-y-1">
-                                Xem Lịch Sự Kiện
-                            </button>
-                            <button className="flex items-center justify-center h-12 px-8 rounded-full bg-white/20 backdrop-blur-md border border-white/40 text-white font-bold text-base hover:bg-white/30 transition-all duration-300 hover:-translate-y-1 group shadow-lg">
-                                <span className="material-symbols-outlined mr-2 group-hover:text-green-300 transition-colors">play_circle</span>
-                                Xem Video
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -64,8 +45,8 @@ export default function EventsPage() {
                                     key={f}
                                     onClick={() => setFilter(f)}
                                     className={`flex h-10 shrink-0 items-center justify-center px-6 rounded-full font-bold text-sm transition-all hover:-translate-y-0.5 active:scale-95 ${filter === f
-                                            ? "bg-primary text-white shadow-lg shadow-green-500/20"
-                                            : "bg-white text-slate-600 border border-gray-200 hover:text-primary hover:border-primary hover:shadow-md"
+                                        ? "bg-primary text-white shadow-lg shadow-green-500/20"
+                                        : "bg-white text-slate-600 border border-gray-200 hover:text-primary hover:border-primary hover:shadow-md"
                                         }`}
                                 >
                                     {f === 'all' ? 'Tất cả' : f}
@@ -184,7 +165,7 @@ export default function EventsPage() {
                 <div className="max-w-[1000px] mx-auto bg-slate-50 border border-slate-100 rounded-3xl p-8 md:p-14 flex flex-col md:flex-row items-center justify-between gap-10 shadow-sm">
                     <div className="flex-1">
                         <h3 className="text-slate-900 text-2xl md:text-3xl font-black mb-3">Đừng Bỏ Lỡ Cuộc Vui!</h3>
-                        <p className="text-slate-500 text-base md:text-lg leading-relaxed">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt từ Airwave.</p>
+                        <p className="text-slate-500 text-base md:text-lg leading-relaxed">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt từ Airwaves.</p>
                     </div>
                     <div className="flex w-full md:w-auto flex-col sm:flex-row gap-3">
                         <input className="h-14 px-6 rounded-full bg-white border border-gray-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary w-full sm:w-72 shadow-sm" placeholder="Email của bạn" type="email" />

@@ -57,15 +57,6 @@ export default function CollectionPage() {
                 <div className="absolute inset-0 bg-black/40 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-                    <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-white uppercase tracking-[0.2em] mb-6 shadow-sm">
-                        Gallery
-                    </span>
-                    <h1 className="text-white text-5xl md:text-7xl font-black leading-tight tracking-tight mb-8 drop-shadow-2xl">
-                        Bộ Sưu Tập <span className="text-primary">Khoảnh Khắc</span>
-                    </h1>
-                    <p className="text-slate-200 text-lg md:text-2xl font-light max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-                        Nơi âm nhạc, ánh sáng và cảm xúc hòa quyện.
-                    </p>
                 </div>
             </section>
 

@@ -88,7 +88,7 @@ export default function AdminLayout({ children }) {
                     <div className="w-10 h-10 rounded-full bg-cover bg-center shrink-0 shadow-sm" style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCa6Et103Y7C8Ue_YPlCWyq-8FKFQyq2oUyjeyiKEjNn7O_dJLi-4yoPnZCyRoR5SqvIm1mETKTwNAdmNTcZE1Gq2MazEGORW44AFQ8Snof0m12H9h2PZPSuEwJaP7nzxTP1CzCMCp4zXRKemcM3-eXchWWrCglaOC3KK7ND-KUhIPtjzV6EhPp9J_Org4RbjGnuTQF2SL02Nry3So0be_vU-p7dllyoJJLHrlwrgYa_zbcHzhGGa96xhM-2URZV8qJJCccC3ctuqE")' }}></div>
                     {!collapsed && (
                         <div className="flex flex-col overflow-hidden">
-                            <h1 className="text-slate-900 font-bold text-base truncate">Airwave</h1>
+                            <h1 className="text-slate-900 font-bold text-base truncate">Airwaves</h1>
                             <span className="text-slate-500 text-xs">Admin Dashboard</span>
                         </div>
                     )}

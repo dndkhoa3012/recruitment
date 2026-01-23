@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { Facebook, Instagram } from 'lucide-react';
+import { FacebookFilled, InstagramOutlined } from '@ant-design/icons';
 
 export default function Footer() {
     return (
-        <footer className="border-t border-slate-100 bg-slate-50 pt-20 pb-10">
+        <footer className="border-t border-slate-100 bg-slate-50 pt-20 pb-6">
             <div className="layout-container flex flex-col items-center">
-                <div className="px-4 md:px-10 w-full max-w-[1200px] grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div className="px-4 md:px-10 w-full max-w-[1200px] grid grid-cols-1 md:grid-cols-4 gap-12 mb-10">
                     <div className="col-span-1 md:col-span-1 flex flex-col gap-6">
                         <div className="flex items-center gap-2 text-slate-900">
                             <img src="/logo.png" alt="Airwave Beach Club" className="h-16 w-auto object-contain" />
@@ -14,10 +14,10 @@ export default function Footer() {
                         <p className="text-slate-500 text-sm leading-relaxed">Điểm đến giải trí hàng đầu tại Phú Quốc, nơi cảm xúc thăng hoa cùng sóng biển.</p>
                         <div className="flex gap-4">
                             <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all shadow-sm" href="https://www.facebook.com/airwavesbeachclub" target="_blank" rel="noopener noreferrer">
-                                <Facebook size={18} strokeWidth={2.5} />
+                                <FacebookFilled style={{ fontSize: '18px' }} />
                             </a>
                             <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#E4405F] hover:border-[#E4405F] hover:text-white transition-all shadow-sm" href="#">
-                                <Instagram size={18} strokeWidth={2.5} />
+                                <InstagramOutlined style={{ fontSize: '18px' }} />
                             </a>
                         </div>
                     </div>
@@ -25,10 +25,10 @@ export default function Footer() {
                     <div className="col-span-1">
                         <h4 className="text-slate-900 font-bold mb-6 text-base">Khám phá</h4>
                         <ul className="flex flex-col gap-3 text-slate-500 text-sm">
-                            <li><Link className="hover:text-primary transition-colors" href="/about">Về chúng tôi</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" href="/menu">Thực đơn &amp; Đồ uống</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" href="/events">Sự kiện đặc biệt</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" href="/collection">Thư viện ảnh</Link></li>
+                            <li><Link className="hover:text-primary transition-colors hover-underline" href="/about">Về chúng tôi</Link></li>
+                            <li><Link className="hover:text-primary transition-colors hover-underline" href="/menu">Thực đơn &amp; Đồ uống</Link></li>
+                            <li><Link className="hover:text-primary transition-colors hover-underline" href="/events">Sự kiện đặc biệt</Link></li>
+                            <li><Link className="hover:text-primary transition-colors hover-underline" href="/collection">Thư viện ảnh</Link></li>
                         </ul>
                     </div>
                     <div className="col-span-1">
@@ -40,11 +40,11 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary text-lg">call</span>
-                                <span>+84 948 222 111</span>
+                                <span>+84 948 xxx xxx</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary text-lg">schedule</span>
-                                <span>Mở cửa: 16:00 - 02:00</span>
+                                <span>Giờ mở cửa: Sắp ra mắt</span>
                             </li>
                         </ul>
                     </div>
@@ -57,11 +57,11 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full max-w-[1200px] px-4 md:px-10 border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="w-full max-w-[1200px] px-4 md:px-10 border-t border-slate-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-slate-400 text-xs font-medium">© 2026 Airwaves Beach Club. All rights reserved.</p>
                     <div className="flex gap-8 text-slate-400 text-xs font-medium">
-                        <a className="hover:text-slate-900 transition-colors" href="#">Điều khoản</a>
-                        <a className="hover:text-slate-900 transition-colors" href="#">Chính sách bảo mật</a>
+                        <a className="hover:text-slate-900 transition-colors hover-underline" href="#">Điều khoản</a>
+                        <a className="hover:text-slate-900 transition-colors hover-underline" href="#">Chính sách bảo mật</a>
                     </div>
                 </div>
             </div>

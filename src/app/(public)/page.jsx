@@ -4,51 +4,17 @@ import React from "react";
 export default function Home() {
     return (
         <>
-            <section className="relative w-full">
-                <div className="px-4 md:px-10 flex flex-1 justify-center py-6">
-                    <div className="layout-content-container flex flex-col max-w-[1200px] flex-1">
-                        <div className="@container">
-                            <div className="@[480px]:p-0">
-                                <div
-                                    className="flex min-h-[600px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-2xl md:rounded-3xl items-center justify-center p-6 text-center relative overflow-hidden shadow-2xl shadow-slate-200"
-                                    data-alt="Stunning tropical sunset at a beach bar in Phu Quoc with palm trees silhouette"
-                                    style={{
-                                        backgroundImage:
-                                            'linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuANPwTyjbQsQoknQ34V8LK86yJ0mYfmdveyvs3Vybc6MLBFdkMIQpQ3cLUUp2qrLLbVOs0PjvbHFXm4YNg7lbvEg5fv6X2UBPuAdrfHwPS8JJpOCAO7gK4kImsGGgFUasyN24CY4yNKG4K0IHhT5KsDe_goSJuOuaOR2qPiuDIRRaCZJ-zpJ2a8jf3uII6zeOhB8DV79trJDH5v9eBrvqJlm0xR5r0yFpl4syheDdXQ1UXHhv35Ag49mF1gpmXQWknMFhuFUIpoMHU")',
-                                    }}
-                                >
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                                    <div className="relative z-10 flex flex-col gap-5 max-w-3xl">
-                                        <div className="flex items-center justify-center gap-2 mb-2">
-                                            <span className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-xs font-bold text-white uppercase tracking-widest">
-                                                Phú Quốc, Việt Nam
-                                            </span>
-                                        </div>
-                                        <h1 className="text-white text-5xl md:text-7xl font-black leading-tight tracking-[-0.03em] drop-shadow-xl">
-                                            Trải nghiệm nhịp sống <br />
-                                            <span className="text-primary">Thiên Đường</span>
-                                        </h1>
-                                        <h2 className="text-slate-100 text-lg md:text-xl font-medium leading-relaxed max-w-xl mx-auto drop-shadow-md">
-                                            Nơi tuyệt vời nhất để ngắm hoàng hôn, thưởng thức những ly
-                                            cocktail mát lạnh và hòa mình vào không khí tiệc tùng sang
-                                            trọng.
-                                        </h2>
-                                    </div>
-                                    <div className="relative z-10 flex flex-wrap gap-4 justify-center mt-6">
-                                        <Link href="/menu" className="flex min-w-[150px] cursor-pointer items-center justify-center rounded-full h-14 px-8 bg-primary hover:bg-primary-hover transition-all transform hover:scale-105 text-slate-900 text-base font-bold shadow-xl shadow-green-500/30 border-0">
-                                            <span>Xem thực đơn</span>
-                                        </Link>
-                                        <button className="flex min-w-[150px] cursor-pointer items-center justify-center rounded-full h-14 px-8 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white text-base font-bold transition-all hover:border-white">
-                                            <span>Đặt bàn trước</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <section className="relative w-full h-[60vh] min-h-[500px] overflow-hidden flex items-center justify-center">
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuANPwTyjbQsQoknQ34V8LK86yJ0mYfmdveyvs3Vybc6MLBFdkMIQpQ3cLUUp2qrLLbVOs0PjvbHFXm4YNg7lbvEg5fv6X2UBPuAdrfHwPS8JJpOCAO7gK4kImsGGgFUasyN24CY4yNKG4K0IHhT5KsDe_goSJuOuaOR2qPiuDIRRaCZJ-zpJ2a8jf3uII6zeOhB8DV79trJDH5v9eBrvqJlm0xR5r0yFpl4syheDdXQ1UXHhv35Ag49mF1gpmXQWknMFhuFUIpoMHU")' }}
+                ></div>
+                <div className="absolute inset-0 bg-black/40 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
                 </div>
             </section>
-            <section className="w-full py-16 md:py-24 bg-white">
+            <section className="w-full py-10 md:py-16 bg-white">
                 <div className="px-4 md:px-10 flex flex-1 justify-center">
                     <div className="layout-content-container flex flex-col max-w-[1200px] flex-1">
                         <div className="flex flex-col-reverse md:flex-row gap-16 items-center">
@@ -84,7 +50,7 @@ export default function Home() {
                                         </span>
                                     </h2>
                                     <p className="text-slate-600 text-lg leading-relaxed font-light">
-                                        Hãy thư giãn với đôi chân trần trên cát trắng mịn. Airwave
+                                        Hãy thư giãn với đôi chân trần trên cát trắng mịn. Airwaves
                                         Beach Club mang đến vẻ đẹp tinh tế, nguyên liệu địa phương
                                         tươi ngon nhất, và không gian âm nhạc đẳng cấp quốc tế.
                                     </p>
@@ -136,7 +102,7 @@ export default function Home() {
                                 Điểm nhấn khác biệt
                             </h2>
                             <p className="text-slate-600 text-lg font-light">
-                                Những điều tinh túy nhất tạo nên thương hiệu Airwave Beach Club
+                                Những điều tinh túy nhất tạo nên thương hiệu Airwaves Beach Club
                             </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">

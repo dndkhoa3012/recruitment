@@ -1,6 +1,7 @@
 import { Plus_Jakarta_Sans, Noto_Sans } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { ConfigProvider } from 'antd';
 import ChatWidget from "@/components/ChatWidget";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -17,7 +18,7 @@ const noto = Noto_Sans({
 });
 
 export const metadata = {
-  title: "Airwave Beach Club",
+  title: "Airwaves Beach Club",
   description: "Phú Quốc Luxury Beach Bar",
 };
 
@@ -29,8 +30,17 @@ export default function RootLayout({ children }) {
       </head>
       <body className="antialiased bg-white text-slate-900 font-display">
         <AntdRegistry>
-          {children}
-          <ChatWidget />
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#4ade80',
+                borderRadius: 8,
+              },
+            }}
+          >
+            {children}
+            <ChatWidget />
+          </ConfigProvider>
         </AntdRegistry>
       </body>
     </html>

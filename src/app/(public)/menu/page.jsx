@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import { Tabs } from "antd";
 
 const drinks = [
     {
@@ -59,92 +61,180 @@ const foods = [
     }
 ];
 
+const beersAndWines = [
+    {
+        name: "Bia Phú Quốc (Local)",
+        price: "60k",
+        desc: "Bia thủ công địa phương, hương vị đậm đà.",
+        image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        name: "Sauvignon Blanc",
+        price: "240k/ly",
+        desc: "Vang trắng New Zealand, hương chanh dây và bưởi.",
+        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        name: "Craft IPA",
+        price: "120k",
+        desc: "Hương hoa bia nồng nàn, hậu vị ngọt nhẹ.",
+        image: "https://images.unsplash.com/photo-1588665510694-573516d252e3?q=80&w=2187&auto=format&fit=crop"
+    }
+];
+
+const appetizers = [
+    {
+        name: "Chả Giò Hải Sản",
+        price: "120k",
+        desc: "Tôm, mực, cua tươi cuốn bánh đa nem giòn rụm.",
+        image: "https://images.unsplash.com/photo-1541544537928-16ef2668a7b3?q=80&w=2576&auto=format&fit=crop"
+    },
+    {
+        name: "Salad Xoài Tôm Khô",
+        price: "110k",
+        desc: "Vị chua ngọt thanh mát, kích thích vị giác.",
+        image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=2484&auto=format&fit=crop"
+    },
+    {
+        name: "Mực Chiên Giòn",
+        price: "150k",
+        desc: "Mực vòng tẩm bột chiên xù, chấm sốt tartar.",
+        image: "https://images.unsplash.com/photo-1604909052743-94e838986d24?q=80&w=2680&auto=format&fit=crop"
+    }
+];
+
+const desserts = [
+    {
+        name: "Kem Dừa Phú Quốc",
+        price: "80k",
+        desc: "Làm từ dừa xiêm tươi, béo ngậy và mát lạnh.",
+        image: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        name: "Trái Cây Nhiệt Đới",
+        price: "120k",
+        desc: "Dĩa trái cây theo mùa tươi ngon và ngọt lịm.",
+        image: "https://images.unsplash.com/photo-1547514701-42782101795e?q=80&w=2487&auto=format&fit=crop"
+    },
+    {
+        name: "Bánh Plan Caramel",
+        price: "70k",
+        desc: "Mềm mịn, thơm trứng sữa, sốt caramel đắng nhẹ.",
+        image: "https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=2678&auto=format&fit=crop"
+    }
+];
+
+const MenuSection = ({ title, items, gridCols = "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" }) => (
+    <div className="mb-12 animate-in fade-in zoom-in duration-300">
+        <div className="flex items-center gap-4 px-4 pb-6 pt-2">
+            <h2 className="text-slate-900 tracking-tight text-[28px] md:text-[32px] font-bold leading-tight">{title}</h2>
+            <div className="h-[1px] flex-1 bg-slate-100"></div>
+        </div>
+
+        {/* Responsive Container: Horizontal Scroll (Mobile/Tablet) -> Grid (Desktop) */}
+        <div className={`
+            flex overflow-x-auto snap-x snap-mandatory gap-4 p-4 no-scrollbar -mx-4 px-8 pb-8
+            lg:grid lg:overflow-visible lg:mx-0 lg:px-4 lg:pb-4 ${gridCols}
+        `}>
+            {items.map((item, idx) => (
+                <div key={idx} className="
+                    group flex flex-col gap-4 p-4 rounded-2xl bg-white border border-slate-100 
+                    min-w-[85vw] sm:min-w-[300px] snap-center
+                    lg:min-w-0 lg:snap-align-none
+                    hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200 hover:-translate-y-1 transition-all duration-300
+                ">
+                    <div className="w-full relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-50">
+                        <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url("${item.image}")` }}></div>
+                    </div>
+                    <div className="flex flex-col flex-1">
+                        <div className="flex justify-between items-start mb-1">
+                            <p className="text-slate-900 text-lg font-bold leading-normal group-hover:text-primary transition-colors">{item.name}</p>
+                            {/* Price removed as requested */}
+                        </div>
+                        <p className="text-slate-500 text-sm font-normal leading-relaxed line-clamp-2">{item.desc}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
 export default function MenuPage() {
+
+    // Tab Items Configuration
+    const items = [
+        {
+            key: 'all',
+            label: 'Tất cả',
+            children: (
+                <div className="mt-6">
+                    <MenuSection title="Signature Cocktails" items={drinks[0].items} gridCols="lg:grid-cols-4" />
+                    <MenuSection title="Bia & Rượu" items={beersAndWines} />
+                    <MenuSection title="Món Khai Vị" items={appetizers} />
+                    <MenuSection title="Hải Sản & Món Chính" items={foods} />
+                    <MenuSection title="Tráng Miệng" items={desserts} />
+                </div>
+            ),
+        },
+        {
+            key: 'cocktails',
+            label: 'Signature Cocktails',
+            children: <div className="mt-6"><MenuSection title="Signature Cocktails" items={drinks[0].items} gridCols="lg:grid-cols-4" /></div>,
+        },
+        {
+            key: 'beer-wine',
+            label: 'Bia & Rượu',
+            children: <div className="mt-6"><MenuSection title="Bia & Rượu" items={beersAndWines} /></div>,
+        },
+        {
+            key: 'appetizers',
+            label: 'Món Khai Vị',
+            children: <div className="mt-6"><MenuSection title="Món Khai Vị" items={appetizers} /></div>,
+        },
+        {
+            key: 'main-course',
+            label: 'Món Chính',
+            children: <div className="mt-6"><MenuSection title="Hải Sản & Món Chính" items={foods} /></div>,
+        },
+        {
+            key: 'desserts',
+            label: 'Tráng Miệng',
+            children: <div className="mt-6"><MenuSection title="Tráng Miệng" items={desserts} /></div>,
+        },
+    ];
+
     return (
         <div className="w-full bg-slate-50 min-h-screen">
-            <div className="max-w-7xl mx-auto px-4 md:px-10 py-5">
-                <div className="@container">
-                    <div className="flex min-h-[400px] md:min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-4 relative overflow-hidden group shadow-2xl shadow-slate-200" data-alt="Sunset view over the ocean with a cocktail in the foreground" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.2) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDsYNq9kWbzbQY-n4Xa7HcsXMN-Uk1gRTMbQBSKBfSNF7jdwJhHsb2n3rR4jB6qhczbil3GTz_XP2klgJIlI-dwfu2G0gCbe2astDijjwunEK4HlaW_ezI7ZGkiMU4lvpE_j_TLPeeo_I571cSf-FevYgsgkX_itKT3V7_7MXniOflD3D0ZmWT5Sz9orfsQTdKTbBFKh7Qv7vMCKyWYTjdOnZh95V7XsYJ3j1QqWFl5GWlLtwuBucZV-hbzey1bnZrPN8dpuh-0SQo")' }}>
-                        <div className="absolute inset-0 bg-black/30 z-0"></div>
-                        <div className="flex flex-col gap-2 text-center z-10 max-w-2xl">
-                            <h1 className="text-white text-4xl md:text-6xl font-black leading-tight tracking-[-0.033em] drop-shadow-lg">
-                                Hương vị biển cả
-                            </h1>
-                            <h2 className="text-white text-sm md:text-lg font-normal leading-normal mt-2 drop-shadow-md">
-                                Trải nghiệm ẩm thực và đồ uống tuyệt vời giữa lòng Phú Quốc
-                            </h2>
-                        </div>
-                    </div>
+            {/* Dramatic Hero Section */}
+            <section className="relative w-full h-[50vh] min-h-[400px] overflow-hidden flex items-center justify-center">
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDsYNq9kWbzbQY-n4Xa7HcsXMN-Uk1gRTMbQBSKBfSNF7jdwJhHsb2n3rR4jB6qhczbil3GTz_XP2klgJIlI-dwfu2G0gCbe2astDijjwunEK4HlaW_ezI7ZGkiMU4lvpE_j_TLPeeo_I571cSf-FevYgsgkX_itKT3V7_7MXniOflD3D0ZmWT5Sz9orfsQTdKTbBFKh7Qv7vMCKyWYTjdOnZh95V7XsYJ3j1QqWFl5GWlLtwuBucZV-hbzey1bnZrPN8dpuh-0SQo")' }}
+                ></div>
+                <div className="absolute inset-0 bg-black/40 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">Thực Đơn</h1>
+                    <p className="text-lg text-white/90 max-w-2xl mx-auto">Khám phá hương vị biển cả và những ly cocktail tuyệt hảo.</p>
                 </div>
-            </div>
+            </section>
 
-            <div className="sticky top-[72px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 w-full py-3 shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 md:px-10 overflow-x-auto no-scrollbar">
-                    <div className="flex gap-3 p-1 min-w-max">
-                        <div className="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-gradient-to-r from-primary to-green-400 text-white px-6 shadow-md shadow-green-500/20 transition-transform hover:scale-105 border border-transparent">
-                            <span className="material-symbols-outlined text-[18px]">restaurant_menu</span>
-                            <p className="text-sm font-bold leading-normal">Tất cả</p>
-                        </div>
-                        {["Signature Cocktails", "Bia & Rượu", "Món Khai Vị", "Món Chính", "Tráng Miệng"].map((item) => (
-                            <div key={item} className="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-white border border-slate-200 hover:border-primary hover:bg-slate-50 px-6 transition-all group shadow-sm">
-                                <span className="material-symbols-outlined text-slate-400 group-hover:text-primary text-[18px]">local_bar</span>
-                                <p className="text-slate-600 group-hover:text-primary text-sm font-medium leading-normal">{item}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            <div className="layout-container flex h-full grow flex-col bg-white">
+            <div className="layout-container flex h-full grow flex-col bg-slate-50">
                 <div className="px-4 md:px-10 flex flex-1 justify-center py-5">
                     <div className="layout-content-container flex flex-col max-w-7xl flex-1">
-                        {/* Cocktails Section */}
-                        <div className="mb-12">
-                            <div className="flex items-center gap-4 px-4 pb-6 pt-6">
-                                <h2 className="text-slate-900 tracking-tight text-[32px] font-bold leading-tight">Signature Cocktails</h2>
-                                <div className="h-[1px] flex-1 bg-slate-100"></div>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
-                                {drinks[0].items.map((drink, idx) => (
-                                    <div key={idx} className="group flex flex-col gap-4 p-4 rounded-2xl bg-white hover:shadow-xl hover:shadow-slate-200 hover:-translate-y-1 transition-all duration-300 border border-slate-100">
-                                        <div className="w-full relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-50">
-                                            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url("${drink.image}")` }}></div>
 
-                                        </div>
-                                        <div>
-                                            <div className="flex justify-between items-start mb-1">
-                                                <p className="text-slate-900 text-lg font-bold leading-normal group-hover:text-primary transition-colors">{drink.name}</p>
-                                            </div>
-                                            <p className="text-slate-500 text-sm font-normal leading-relaxed line-clamp-2">{drink.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                        <div className="sticky top-[72px] z-40 bg-slate-50/95 backdrop-blur-sm pt-4 pb-2">
+                            <Tabs
+                                defaultActiveKey="all"
+                                items={items}
+                                size="large"
+                                centered
+                                tabBarStyle={{
+                                    marginBottom: 0,
+                                    borderBottom: '1px solid #e2e8f0'
+                                }}
+                            />
                         </div>
 
-                        {/* Food Section */}
-                        <div className="mb-12">
-                            <div className="flex items-center gap-4 px-4 pb-6 pt-2">
-                                <h2 className="text-slate-900 tracking-tight text-[32px] font-bold leading-tight">Hải Sản & Món Chính</h2>
-                                <div className="h-[1px] flex-1 bg-slate-100"></div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-                                {foods.map((food, idx) => (
-                                    <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-white border border-slate-100 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-100 transition-all group">
-                                        <div className="w-28 h-28 shrink-0 bg-center bg-no-repeat bg-cover rounded-xl shadow-md" style={{ backgroundImage: `url("${food.image}")` }}></div>
-                                        <div className="flex flex-col flex-1 justify-between py-1">
-                                            <div>
-                                                <div className="flex justify-between">
-                                                    <p className="text-slate-900 text-base font-bold leading-normal group-hover:text-primary transition-colors">{food.name}</p>
-                                                </div>
-                                                <p className="text-slate-500 text-sm font-normal mt-1 line-clamp-2">{food.desc}</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

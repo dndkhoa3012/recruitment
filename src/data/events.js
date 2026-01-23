@@ -10,7 +10,7 @@ export const events = [
         price: "299.000đ",
         description: "Đêm hội lớn nhất tháng với không gian lung linh sắc xanh huyền ảo, các DJ quốc tế và ưu đãi bucket cocktail trên bãi cát trắng mịn.",
         longDescription: `
-      <p>Hòa mình vào không khí sôi động của bữa tiệc Full Moon Party huyền thoại tại Airwave Beach Club. Dưới ánh trăng rằm, bãi biển sẽ biến thành một sàn nhảy khổng lồ với hệ thống âm thanh ánh sáng đẳng cấp.</p>
+      <p>Hòa mình vào không khí sôi động của bữa tiệc Full Moon Party huyền thoại tại Airwaves Beach Club. Dưới ánh trăng rằm, bãi biển sẽ biến thành một sàn nhảy khổng lồ với hệ thống âm thanh ánh sáng đẳng cấp.</p>
       <p>Các DJ hàng đầu sẽ mang đến những set nhạc EDM, House và Top 40 thời thượng nhất. Đừng bỏ lỡ màn trình diễn múa lửa đặc sắc và những trò chơi bãi biển thú vị.</p>
       <p>Vé bao gồm 1 phần nước uống miễn phí và bộ phụ kiện phát sáng neon.</p>
     `,

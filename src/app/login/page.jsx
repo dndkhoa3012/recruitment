@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
 
                     {/* Header */}
                     <div className="flex flex-col items-center mb-10 text-center">
-                        <img src="/logo.jpg" alt="Airwave" className="h-16 mb-6" />
+                        <img src="/logo.jpg" alt="Airwaves" className="h-16 mb-6" />
                         <h1 className="text-2xl font-bold text-slate-800 mb-2">Hệ thống Quản trị</h1>
                         <p className="text-slate-500 text-sm">Vui lòng đăng nhập để tiếp tục điều hành</p>
                     </div>
@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
                         >
                             <Input
                                 prefix={<MailOutlined className="text-slate-400" />}
-                                placeholder="admin@airwave.vn"
+                                placeholder="airxxx@gmail.com"
                                 className="rounded-xl bg-slate-50 border-slate-200 hover:border-green-500 focus:border-green-500"
                             />
                         </Form.Item>
@@ -81,7 +81,7 @@ export default function AdminLoginPage() {
 
                         <div className="mt-12 pt-6 border-t border-slate-100">
                             <p className="text-[10px] font-bold text-slate-300 tracking-[2px] uppercase">
-                                Airwave OS v2.4.0
+                                Airwaves OS v2.4.0
                             </p>
                         </div>
                     </div>

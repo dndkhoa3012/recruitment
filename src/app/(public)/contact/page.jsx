@@ -3,19 +3,16 @@ import React from "react";
 
 export default function ContactPage() {
     return (
-        <div className="flex flex-col min-h-screen bg-slate-50">
-            {/* Header Section */}
-            <section className="relative w-full py-20 bg-slate-900 border-b border-slate-800">
+        <div className="flex flex-col min-h-screen bg-white">
+            {/* Header Section - Minimalist */}
+            <section className="w-full pt-10 pb-2 bg-white">
                 <div className="px-4 md:px-10 flex flex-1 justify-center">
                     <div className="layout-content-container flex flex-col max-w-[1200px] flex-1 text-center items-center">
-                        <span className="px-4 py-1.5 rounded-full bg-primary/20 backdrop-blur-md border border-primary/30 text-xs font-bold text-primary uppercase tracking-widest mb-4">
-                            Hỗ trợ 24/7
-                        </span>
-                        <h1 className="text-white text-4xl md:text-6xl font-black leading-tight tracking-[-0.02em] mb-6">
-                            Liên Hệ <span className="text-primary">Airwave</span>
+                        <h1 className="text-slate-900 text-4xl md:text-6xl font-black leading-tight tracking-[-0.02em] mb-6">
+                            Liên Hệ <span className="text-primary">Airwaves</span>
                         </h1>
-                        <p className="text-slate-400 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
-                            Để lại tin nhắn hoặc ghé thăm chúng tôi trực tiếp. Chúng tôi luôn sẵn sàng lắng nghe và phục vụ bạn.
+                        <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
+                            Để lại tin nhắn hoặc ghé thăm chúng tôi trực tiếp.
                         </p>
                     </div>
                 </div>
@@ -50,8 +47,7 @@ export default function ContactPage() {
                                             <div>
                                                 <span className="block text-slate-900 font-bold mb-1">Điện thoại</span>
                                                 <p className="text-slate-500 text-sm leading-relaxed">
-                                                    +84 912 345 678 (Hotline)<br />
-                                                    +84 297 399 9999 (Đặt bàn)
+                                                    +84 948 xxx xxx
                                                 </p>
                                             </div>
                                         </div>
@@ -62,8 +58,7 @@ export default function ContactPage() {
                                             <div>
                                                 <span className="block text-slate-900 font-bold mb-1">Email</span>
                                                 <p className="text-slate-500 text-sm leading-relaxed">
-                                                    info@airwavesbeachbar.com<br />
-                                                    booking@airwavesbeachbar.com
+                                                    airxxx@gmail.com
                                                 </p>
                                             </div>
                                         </div>
@@ -74,8 +69,7 @@ export default function ContactPage() {
                                             <div>
                                                 <span className="block text-slate-900 font-bold mb-1">Giờ mở cửa</span>
                                                 <p className="text-slate-500 text-sm leading-relaxed">
-                                                    Thứ 2 - Chủ Nhật: 16:00 - 02:00<br />
-                                                    Happy Hour: 17:00 - 19:00
+                                                    Sắp ra mắt
                                                 </p>
                                             </div>
                                         </div>

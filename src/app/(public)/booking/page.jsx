@@ -27,19 +27,16 @@ export default function BookingPage() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-slate-50">
-            {/* Header Section */}
-            <section className="relative w-full py-20 bg-slate-900 border-b border-slate-800">
+        <div className="flex flex-col min-h-screen bg-white">
+            {/* Header Section - Minimalist */}
+            <section className="w-full pt-10 pb-2 bg-white">
                 <div className="px-4 md:px-10 flex flex-1 justify-center">
                     <div className="layout-content-container flex flex-col max-w-[1200px] flex-1 text-center items-center">
-                        <span className="px-4 py-1.5 rounded-full bg-primary/20 backdrop-blur-md border border-primary/30 text-xs font-bold text-primary uppercase tracking-widest mb-4">
-                            Reservations
-                        </span>
-                        <h1 className="text-white text-4xl md:text-6xl font-black leading-tight tracking-[-0.02em] mb-6">
+                        <h1 className="text-slate-900 text-4xl md:text-6xl font-black leading-tight tracking-[-0.02em] mb-6">
                             Đặt Bàn <span className="text-primary">Online</span>
                         </h1>
-                        <p className="text-slate-400 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
-                            Giữ chỗ tốt nhất cho buổi tối hoàn hảo của bạn. Chúng tôi khuyến khích đặt bàn trước ít nhất 2 giờ.
+                        <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
+                            Giữ chỗ tốt nhất cho buổi tối hoàn hảo của bạn.
                         </p>
                     </div>
                 </div>
@@ -193,9 +190,7 @@ export default function BookingPage() {
                             </div>
                         )}
 
-                        <p className="text-center text-slate-500 text-sm mt-8">
-                            Hoặc gọi trực tiếp qua hotline: <span className="font-bold text-slate-900">+84 912 345 678</span>
-                        </p>
+
                     </div>
                 </div>
             </section>
