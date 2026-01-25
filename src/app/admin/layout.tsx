@@ -1,9 +1,11 @@
+"use client"
+
 import { AppSidebar } from "@/components/admin/app-sidebar"
 import { SiteHeader } from "@/components/admin/site-header"
 import {
     SidebarInset,
     SidebarProvider,
-} from "@/components/ui/sidebar"
+} from "@/components/animate-ui/components/radix/sidebar"
 import React from "react"
 
 export default function AdminLayout({
@@ -11,8 +13,13 @@ export default function AdminLayout({
 }: {
     children: React.ReactNode
 }) {
+    const [open, setOpen] = React.useState(true)
+
     return (
         <SidebarProvider
+            open={open}
+            onOpenChange={setOpen}
+            className=""
             style={
                 {
                     "--header-height": "calc(var(--spacing) * 12)",
@@ -20,7 +27,7 @@ export default function AdminLayout({
             }
         >
             <AppSidebar variant="inset" />
-            <SidebarInset>
+            <SidebarInset className="">
                 <SiteHeader />
                 <div className="flex flex-1 flex-col">
                     {children}

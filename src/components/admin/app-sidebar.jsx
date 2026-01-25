@@ -3,6 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import {
+  IconCalendarEvent,
   IconCamera,
   IconChartBar,
   IconDashboard,
@@ -14,6 +15,7 @@ import {
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
+  IconPhoto,
   IconReport,
   IconSearch,
   IconSettings,
@@ -30,29 +32,49 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/animate-ui/components/radix/sidebar"
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "admin",
+    email: "admin@phuquoctrip.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
     {
       title: "Tổng quan",
-      url: "#",
+      url: "/admin",
       icon: IconDashboard,
     },
     {
-      title: "Đặt chỗ",
-      url: "#",
+      title: "Đặt bàn",
+      url: "/admin/booking",
       icon: IconListDetails,
     },
     {
-      title: "Thực đơn",
+      title: "Mặt hàng",
       url: "#",
       icon: IconChartBar,
+      items: [
+        {
+          title: "Thực đơn",
+          url: "/admin/menu",
+        },
+        {
+          title: "Danh mục",
+          url: "/admin/categories",
+        },
+      ],
+    },
+    {
+      title: "Sự kiện",
+      url: "/admin/events",
+      icon: IconCalendarEvent,
+    },
+    {
+      title: "Thư viện ảnh",
+      url: "#",
+      icon: IconPhoto,
     },
   ],
   navClouds: [
