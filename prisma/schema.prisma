@@ -18,6 +18,7 @@ model MenuCategory {
   name      String
   color     String?  @default("default") // For UI tag color
   layoutType  DisplayLayout @default(SQUARE)
+  isFeatured  Boolean       @default(false)
   menus     Menu[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

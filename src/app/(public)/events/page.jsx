@@ -41,6 +41,10 @@ export default function EventsPage() {
     // Get the featured event (only if explicitly marked as isFeatured and not hidden)
     const featuredEvent = visibleEvents.find(e => e.isFeatured) || null;
 
+    // Calculate active categories (categories that have at least one visible event)
+    const activeCategoryNames = new Set(visibleEvents.map(e => e.category));
+    const visibleCategories = categories.filter(cat => activeCategoryNames.has(cat.name));
+
     // Filter events for grid
     const gridEvents = visibleEvents.filter(e => {
         if (featuredEvent && e.id === featuredEvent.id) return false;
@@ -91,7 +95,7 @@ export default function EventsPage() {
                             >
                                 Tất cả
                             </button>
-                            {categories.map((cat) => (
+                            {visibleCategories.map((cat) => (
                                 <button
                                     key={cat.id}
                                     onClick={() => setFilter(cat.name)}

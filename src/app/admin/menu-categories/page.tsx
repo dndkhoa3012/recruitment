@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Table, Tag, Popconfirm, message, Space, Modal, Form, Input, Select } from "antd";
+import { Table, Tag, Popconfirm, message, Space, Modal, Form, Input, Select, Switch } from "antd";
 
 import { getCategories, createCategory, updateCategory, deleteCategory } from "@/app/admin/menu/menu.service";
 
@@ -41,11 +41,49 @@ const CategoriesPage = () => {
         }
     };
 
+    const handleToggleFeatured = async (category: any, checked: boolean) => {
+        try {
+            // Optimistic update - Enforce single featured
+            let updatedCategories;
+            if (checked) {
+                updatedCategories = categories.map(c => ({
+                    ...c,
+                    isFeatured: c.id === category.id
+                }));
+            } else {
+                updatedCategories = categories.map(c =>
+                    c.id === category.id ? { ...c, isFeatured: false } : c
+                );
+            }
+            setCategories(updatedCategories);
+
+            // If checking, we need to ensure others are unchecked on server
+            // But for simplicity in this toggle handler, we simply update the current one
+            // AND if checked, we might need to rely on the backend to unset others
+            // OR we can rely on the fetchCategories() after success to sync, 
+            // but for smooth UI, we optimistically update.
+
+            await updateCategory(category.id, {
+                ...category,
+                isFeatured: checked
+            });
+
+            // To ensure server state consistency if we relying on server to unset others:
+            if (checked) fetchCategories();
+            else messageApi.success("Đã tắt nổi bật");
+
+        } catch (error) {
+            messageApi.error("Không thể cập nhật trạng thái");
+            fetchCategories(); // Revert on error
+        }
+    };
+
     const openCreateCategoryModal = () => {
         setEditingCategory(null);
         formCategory.resetFields();
-        // Default layout
+        // Default layout and featured status
         formCategory.setFieldValue('layoutType', 'SQUARE');
+        formCategory.setFieldValue('isFeatured', false);
         setIsCategoryModalOpen(true);
     };
 
@@ -102,6 +140,18 @@ const CategoriesPage = () => {
             dataIndex: "color",
             key: "color",
             render: (color: string) => <Tag color={color}>{color}</Tag>
+        },
+        {
+            title: "NỔI BẬT",
+            dataIndex: "isFeatured",
+            key: "isFeatured",
+            render: (featured: boolean, record: any) => (
+                <Switch
+                    checked={featured}
+                    onChange={(checked) => handleToggleFeatured(record, checked)}
+                    size="small"
+                />
+            )
         },
         {
             title: "",
@@ -184,6 +234,15 @@ const CategoriesPage = () => {
                             <Select.Option value="SQUARE">Vuông (Đồ ăn)</Select.Option>
                             <Select.Option value="PORTRAIT">Dọc (Đồ uống)</Select.Option>
                         </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                        name="isFeatured"
+                        label="Nổi bật"
+                        valuePropName="checked"
+                        initialValue={false}
+                    >
+                        <Switch />
                     </Form.Item>
 
                     <div className="flex justify-end gap-2">

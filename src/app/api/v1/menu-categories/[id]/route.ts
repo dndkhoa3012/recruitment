@@ -6,12 +6,25 @@ export async function PUT(request: Request, props: { params: Promise<{ id: strin
     try {
         const params = await props.params;
         const body = await request.json();
+
+        // If setting as featured, unset others first
+        if (body.isFeatured) {
+            await prisma.menuCategory.updateMany({
+                where: {
+                    isFeatured: true,
+                    id: { not: params.id } // Optimization: don't touch current one if it was already true (though update covers it)
+                },
+                data: { isFeatured: false }
+            });
+        }
+
         const category = await prisma.menuCategory.update({
             where: { id: params.id },
             data: {
                 name: body.name,
                 color: body.color || 'default',
                 layoutType: body.layoutType,
+                isFeatured: body.isFeatured,
             },
         });
         return NextResponse.json(category);

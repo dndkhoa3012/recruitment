@@ -10,10 +10,14 @@ export default async function MenuPage() {
         include: {
             menus: true
         },
-        orderBy: {
-            createdAt: 'asc' // Or any specific order
-        }
+        orderBy: [
+            { isFeatured: 'desc' },
+            { createdAt: 'asc' }
+        ]
     });
+
+    // Filter out empty categories
+    const visibleCategories = categories.filter(cat => cat.menus && cat.menus.length > 0);
 
 
     // helper formatPrice moved to component or duplicated, removing from here if unused
@@ -23,23 +27,22 @@ export default async function MenuPage() {
     // Create "All" tab content
     const allTabContent = (
         <div className="mt-6">
-            {categories.map(cat => (
+            {visibleCategories.map(cat => (
                 <MenuSection
                     key={cat.id}
                     title={cat.name}
                     items={cat.menus}
-                    // Optional: Custom grid cols based on category if needed
-                    gridCols="lg:grid-cols-3"
+                    layoutType={cat.layoutType}
                 />
             ))}
         </div>
     );
 
     // Create detailed tabs
-    const categoryTabs = categories.map(cat => ({
+    const categoryTabs = visibleCategories.map(cat => ({
         key: cat.id,
         label: cat.name,
-        children: <div className="mt-6"><MenuSection title={cat.name} items={cat.menus} /></div>
+        children: <div className="mt-6"><MenuSection title={cat.name} items={cat.menus} layoutType={cat.layoutType} /></div>
     }));
 
     // Combine for Ant Design Tabs

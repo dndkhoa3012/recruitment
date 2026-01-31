@@ -19,11 +19,21 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
+
+        // If setting as featured, unset others first
+        if (body.isFeatured) {
+            await prisma.menuCategory.updateMany({
+                where: { isFeatured: true },
+                data: { isFeatured: false }
+            });
+        }
+
         const category = await prisma.menuCategory.create({
             data: {
                 name: body.name,
                 color: body.color || 'default',
                 layoutType: body.layoutType || 'SQUARE',
+                isFeatured: body.isFeatured || false,
             },
         });
         return NextResponse.json(category);
