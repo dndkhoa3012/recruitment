@@ -18,8 +18,8 @@ const noto = Noto_Sans({
 });
 
 export const metadata = {
-  title: "Airwaves Beach Club",
-  description: "Phú Quốc Luxury Beach Bar",
+  title: "Phu Quoc Travel Recruitment",
+  description: "Tuyển dụng nhân sự du lịch tại Phú Quốc - Cơ hội nghề nghiệp tại đảo Ngọc",
 };
 
 export default function RootLayout({ children }) {
