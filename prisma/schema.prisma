@@ -9,148 +9,43 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-enum DisplayLayout {
-  PORTRAIT  // Dùng cho đồ uống (Dọc)
-  SQUARE    // Dùng cho đồ ăn (Vuông/Tròn)
-}
-model MenuCategory {
-  id        String   @id @default(uuid())
-  name      String
-  color     String?  @default("default") // For UI tag color
-  layoutType  DisplayLayout @default(SQUARE)
-  isFeatured  Boolean       @default(false)
-  menus     Menu[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
-model Menu {
+model Job {
   id          String   @id @default(uuid())
-  name        String
-  price       String   // Storing as string (e.g., "180k") to match current frontend
-  description String?  @db.Text
-  image       String?  @db.LongText // Store multiple images as JSON string
-  categoryId  String
-  category    MenuCategory @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([categoryId])
-}
-
-model Event {
-  id          String   @id @default(uuid())
-  name        String
-  date        DateTime
-  poster      String?  @db.Text
-  description String?  @db.Text
+  title       String   // Job title
+  department  String?  // Department/Category
+  location    String   // Work location
+  type        String   @default("full-time") // full-time, part-time, contract, internship
+  salary      String?  // Salary range (e.g., "15-20 triệu VNĐ")
+  description String?  @db.Text // Job description
+  requirements String? @db.Text // Job requirements
+  benefits    String?  @db.Text // Benefits
+  status      String   @default("active") // active, inactive, closed
+  publishedAt DateTime? // When job was published
+  deadline    DateTime? // Application deadline
   
-  // New fields for UI synchronization
-  location    String?  @default("Bãi biển chính")
-  price       Int?     @default(0) 
-  startTime   String?  @default("18:00")
-  endTime     String?  @default("22:00")
-  itinerary   Json?    // Storing list of { time, activity } objects
-  timeline    Json?    // Storing complex timeline groups
-  isFeatured  Boolean  @default(false) // Display in featured section
-  isHidden    Boolean  @default(false) // Hide from public page
-  content     String?  @db.LongText    // Rich text content (HTML from TipTap)
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  categoryId  String?
-  category    EventCategory? @relation(fields: [categoryId], references: [id])
-}
-
-model EventCategory {
-  id        String   @id @default(uuid())
-  name      String
-  color     String?  @default("default") // For UI tag color
-  events    Event[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Booking {
-  id           String   @id @default(uuid())
-  customerName String
-  phoneNumber  String
-  bookingDate  DateTime
-  guestCount   Int
-  status       String   @default("pending") // pending, confirmed, cancelled
-  
-  // New fields for UI synchronization
-  email        String?
-  area         String?
-  note         String?
-  time         String?  // e.g. "19:30"
-
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
-
-model GalleryCategory {
-  id        String   @id @default(uuid())
-  name      String
-  description String?
-  collections GalleryCollection[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model GalleryCollection {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  coverImage  String?  @db.LongText
-  
-  categoryId  String
-  category    GalleryCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  
-  images      GalleryImage[]
+  candidates  Candidate[]
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model GalleryImage {
-  id        String   @id @default(uuid())
-  src       String   @db.LongText
-  alt       String?
-  order     Int      @default(0)
+model Candidate {
+  id          String   @id @default(uuid())
+  fullName    String   // Full name
+  email       String   // Email
+  phone       String   // Phone number
+  resume      String?  @db.Text // Resume file URL or text
+  coverLetter String?  @db.Text // Cover letter
+  status      String   @default("pending") // pending, reviewing, interviewed, accepted, rejected
+  appliedAt   DateTime @default(now())
   
-  collectionId String?
-  collection   GalleryCollection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  jobId       String
+  job         Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-enum PageType {
-  HOME
-  MENU
-  EVENTS
-}
-
-enum DeviceType {
-  DESKTOP
-  MOBILE
-}
-
-model Banner {
-  id         String     @id @default(uuid())
-  pageType   PageType
-  deviceType DeviceType @default(DESKTOP)
-  title      String?
-  subtitle   String?    @db.Text
-  imageUrls  Json       @default("[]") // Array of image URLs stored as JSON
-  altText    String?
-  isActive   Boolean    @default(true)
-  order      Int        @default(0)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-
-  @@index([pageType, deviceType, isActive, order])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([jobId])
+  @@index([email])
 }

@@ -20,8 +20,7 @@ import {
   IconSearch,
   IconSettings,
   IconUsers,
-  IconHome,
-  IconBowlSpoon,
+  IconBriefcase,
 } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/admin/nav-main"
@@ -39,7 +38,7 @@ import {
 const data = {
   user: {
     name: "admin",
-    email: "admin@phuquoctrip.com",
+    email: "admin@johntours.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
@@ -49,73 +48,14 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Trang chủ",
-      url: "#",
-      icon: IconHome,
-      items: [
-        {
-          title: "Menu",
-          url: "#",
-        },
-        {
-          title: "Banner",
-          url: "/admin/home/banner",
-        },
-      ],
+      title: "Việc làm",
+      url: "/admin/jobs",
+      icon: IconBriefcase,
     },
     {
-      title: "Đặt bàn",
-      url: "/admin/booking",
-      icon: IconListDetails,
-    },
-    {
-      title: "Mặt hàng",
-      url: "#",
-      icon: IconBowlSpoon,
-      items: [
-        {
-          title: "Thực đơn",
-          url: "/admin/menu",
-        },
-        {
-          title: "Danh mục",
-          url: "/admin/menu-categories",
-        },
-        {
-          title: "Banner",
-          url: "/admin/menu/banner",
-        },
-      ],
-    },
-    {
-      title: "Sự kiện",
-      url: "#",
-      icon: IconCalendarEvent,
-      items: [
-        {
-          title: "Sự kiện",
-          url: "/admin/events",
-        },
-        {
-          title: "Danh mục",
-          url: "/admin/event-categories",
-        },
-      ],
-    },
-    {
-      title: "Thư viện ảnh",
-      url: "#",
-      icon: IconPhoto,
-      items: [
-        {
-          title: "Bộ sưu tập",
-          url: "/admin/gallery",
-        },
-        {
-          title: "Danh mục",
-          url: "/admin/gallery-categories",
-        },
-      ],
+      title: "Ứng viên",
+      url: "/admin/candidates",
+      icon: IconUsers,
     },
   ],
   navClouds: [
