@@ -1,37 +1,88 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Form, Input, Select, DatePicker, Button, message, Spin } from "antd"
+import { Form, Input, Select, DatePicker, Button, message, Spin, Alert } from "antd"
 import { useRouter, useParams } from "next/navigation"
+import Link from "next/link"
 import dayjs from "dayjs"
-
-const { TextArea } = Input
+import DescriptionEditor from "@/components/admin/DescriptionEditor"
+import RequirementsEditor from "@/components/admin/RequirementsEditor"
+import BenefitsEditor from "@/components/admin/BenefitsEditor"
 
 export default function EditJobPage() {
     const router = useRouter()
     const params = useParams()
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(true)
+    const [categories, setCategories] = useState([])
+    const [loadingCategories, setLoadingCategories] = useState(true)
 
     useEffect(() => {
-        const fetchJob = async () => {
-            try {
-                const response = await fetch(`/api/jobs/${params.id}`)
-                const job = await response.json()
-
-                form.setFieldsValue({
-                    ...job,
-                    deadline: job.deadline ? dayjs(job.deadline) : null
-                })
-                setLoading(false)
-            } catch (error) {
-                message.error('Không thể tải thông tin việc làm')
-                console.error('Error fetching job:', error)
-            }
-        }
-
+        fetchCategories()
         fetchJob()
     }, [params.id])
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch('/api/categories')
+            if (response.ok) {
+                const data = await response.json()
+                setCategories(data)
+            }
+        } catch (error) {
+            console.error('Error fetching categories:', error)
+        } finally {
+            setLoadingCategories(false)
+        }
+    }
+
+    const fetchJob = async () => {
+        try {
+            const response = await fetch(`/api/jobs/${params.id}`)
+            const job = await response.json()
+
+            // Parse JSON fields or fallback to legacy string data
+            let description = job.description
+            let requirements = job.requirements
+            let benefits = job.benefits
+
+            try {
+                description = typeof job.description === 'string' && job.description.startsWith('{')
+                    ? JSON.parse(job.description)
+                    : { intro: job.description || '', points: [] }
+            } catch {
+                description = { intro: job.description || '', points: [] }
+            }
+
+            try {
+                requirements = typeof job.requirements === 'string' && job.requirements.startsWith('[')
+                    ? JSON.parse(job.requirements)
+                    : (job.requirements || '').split('\n').filter(r => r.trim())
+            } catch {
+                requirements = (job.requirements || '').split('\n').filter(r => r.trim())
+            }
+
+            try {
+                benefits = typeof job.benefits === 'string' && job.benefits.startsWith('[')
+                    ? JSON.parse(job.benefits)
+                    : []
+            } catch {
+                benefits = []
+            }
+
+            form.setFieldsValue({
+                ...job,
+                description,
+                requirements,
+                benefits,
+                deadline: job.deadline ? dayjs(job.deadline) : null
+            })
+            setLoading(false)
+        } catch (error) {
+            message.error('Không thể tải thông tin việc làm')
+            console.error('Error fetching job:', error)
+        }
+    }
 
     const onFinish = async (values) => {
         try {
@@ -40,6 +91,10 @@ export default function EditJobPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...values,
+                    // Convert structured data to JSON strings
+                    description: JSON.stringify(values.description),
+                    requirements: JSON.stringify(values.requirements),
+                    benefits: JSON.stringify(values.benefits),
                     deadline: values.deadline ? values.deadline.toISOString() : null
                 })
             })
@@ -86,10 +141,20 @@ export default function EditJobPage() {
 
                     <div className="grid grid-cols-2 gap-4">
                         <Form.Item
-                            label="Phòng ban"
-                            name="department"
+                            label="Danh mục"
+                            name="categoryId"
                         >
-                            <Input placeholder="VD: Technology" />
+                            <Select
+                                placeholder="Chọn danh mục"
+                                loading={loadingCategories}
+                                allowClear
+                            >
+                                {categories.map((cat: any) => (
+                                    <Select.Option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </Select.Option>
+                                ))}
+                            </Select>
                         </Form.Item>
 
                         <Form.Item
@@ -100,6 +165,20 @@ export default function EditJobPage() {
                             <Input placeholder="VD: Hồ Chí Minh" />
                         </Form.Item>
                     </div>
+
+                    {categories.length === 0 && !loadingCategories && (
+                        <Alert
+                            message="Chưa có danh mục nào"
+                            description={
+                                <span>
+                                    Bạn cần tạo danh mục trước. <Link href="/admin/categories/create" className="text-blue-600 hover:underline">Tạo danh mục ngay</Link>
+                                </span>
+                            }
+                            type="info"
+                            showIcon
+                            className="mb-4"
+                        />
+                    )}
 
                     <div className="grid grid-cols-2 gap-4">
                         <Form.Item
@@ -150,30 +229,21 @@ export default function EditJobPage() {
                         label="Mô tả công việc"
                         name="description"
                     >
-                        <TextArea
-                            rows={4}
-                            placeholder="Nhập mô tả chi tiết về công việc..."
-                        />
+                        <DescriptionEditor />
                     </Form.Item>
 
                     <Form.Item
                         label="Yêu cầu"
                         name="requirements"
                     >
-                        <TextArea
-                            rows={4}
-                            placeholder="Nhập các yêu cầu về kỹ năng, kinh nghiệm..."
-                        />
+                        <RequirementsEditor />
                     </Form.Item>
 
                     <Form.Item
                         label="Quyền lợi"
                         name="benefits"
                     >
-                        <TextArea
-                            rows={4}
-                            placeholder="Nhập các quyền lợi, phúc lợi..."
-                        />
+                        <BenefitsEditor />
                     </Form.Item>
 
                     <Form.Item className="mb-0">

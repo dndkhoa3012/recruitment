@@ -10,10 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?  @db.Text
+  
+  jobs        Job[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Job {
   id          String   @id @default(uuid())
   title       String   // Job title
-  department  String?  // Department/Category
+  department  String?  // Department/Category (legacy - will be replaced by categoryId)
+  categoryId  String?  // Category relationship
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   location    String   // Work location
   type        String   @default("full-time") // full-time, part-time, contract, internship
   salary      String?  // Salary range (e.g., "15-20 triệu VNĐ")
@@ -28,6 +42,8 @@ model Job {
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
+  @@index([categoryId])
 }
 
 model Candidate {

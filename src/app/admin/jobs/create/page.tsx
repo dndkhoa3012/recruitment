@@ -1,14 +1,37 @@
 "use client"
 
-import { Form, Input, Select, DatePicker, Button, message } from "antd"
+import { useState, useEffect } from "react"
+import { Form, Input, Select, DatePicker, Button, message, Alert } from "antd"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import dayjs from "dayjs"
-
-const { TextArea } = Input
+import DescriptionEditor from "@/components/admin/DescriptionEditor"
+import RequirementsEditor from "@/components/admin/RequirementsEditor"
+import BenefitsEditor from "@/components/admin/BenefitsEditor"
 
 export default function CreateJobPage() {
     const router = useRouter()
     const [form] = Form.useForm()
+    const [categories, setCategories] = useState([])
+    const [loadingCategories, setLoadingCategories] = useState(true)
+
+    useEffect(() => {
+        fetchCategories()
+    }, [])
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch('/api/categories')
+            if (response.ok) {
+                const data = await response.json()
+                setCategories(data)
+            }
+        } catch (error) {
+            console.error('Error fetching categories:', error)
+        } finally {
+            setLoadingCategories(false)
+        }
+    }
 
     const onFinish = async (values) => {
         try {
@@ -17,6 +40,10 @@ export default function CreateJobPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...values,
+                    // Convert structured data to JSON strings
+                    description: JSON.stringify(values.description),
+                    requirements: JSON.stringify(values.requirements),
+                    benefits: JSON.stringify(values.benefits),
                     deadline: values.deadline ? values.deadline.toISOString() : null
                 })
             })
@@ -46,7 +73,10 @@ export default function CreateJobPage() {
                     onFinish={onFinish}
                     initialValues={{
                         type: 'full-time',
-                        status: 'active'
+                        status: 'active',
+                        description: { intro: '', points: [''] },
+                        requirements: [''],
+                        benefits: [{ icon: 'home_work', text: '' }]
                     }}
                 >
                     <Form.Item
@@ -59,10 +89,20 @@ export default function CreateJobPage() {
 
                     <div className="grid grid-cols-2 gap-4">
                         <Form.Item
-                            label="Phòng ban"
-                            name="department"
+                            label="Danh mục"
+                            name="categoryId"
                         >
-                            <Input placeholder="VD: Technology" />
+                            <Select
+                                placeholder="Chọn danh mục"
+                                loading={loadingCategories}
+                                allowClear
+                            >
+                                {categories.map((cat: any) => (
+                                    <Select.Option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </Select.Option>
+                                ))}
+                            </Select>
                         </Form.Item>
 
                         <Form.Item
@@ -73,6 +113,20 @@ export default function CreateJobPage() {
                             <Input placeholder="VD: Hồ Chí Minh" />
                         </Form.Item>
                     </div>
+
+                    {categories.length === 0 && !loadingCategories && (
+                        <Alert
+                            message="Chưa có danh mục nào"
+                            description={
+                                <span>
+                                    Bạn cần tạo danh mục trước. <Link href="/admin/categories/create" className="text-blue-600 hover:underline">Tạo danh mục ngay</Link>
+                                </span>
+                            }
+                            type="info"
+                            showIcon
+                            className="mb-4"
+                        />
+                    )}
 
                     <div className="grid grid-cols-2 gap-4">
                         <Form.Item
@@ -110,30 +164,21 @@ export default function CreateJobPage() {
                         label="Mô tả công việc"
                         name="description"
                     >
-                        <TextArea
-                            rows={4}
-                            placeholder="Nhập mô tả chi tiết về công việc..."
-                        />
+                        <DescriptionEditor />
                     </Form.Item>
 
                     <Form.Item
                         label="Yêu cầu"
                         name="requirements"
                     >
-                        <TextArea
-                            rows={4}
-                            placeholder="Nhập các yêu cầu về kỹ năng, kinh nghiệm..."
-                        />
+                        <RequirementsEditor />
                     </Form.Item>
 
                     <Form.Item
                         label="Quyền lợi"
                         name="benefits"
                     >
-                        <TextArea
-                            rows={4}
-                            placeholder="Nhập các quyền lợi, phúc lợi..."
-                        />
+                        <BenefitsEditor />
                     </Form.Item>
 
                     <Form.Item className="mb-0">

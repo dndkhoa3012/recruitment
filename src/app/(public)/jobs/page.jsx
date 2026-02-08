@@ -1,6 +1,41 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import Link from "next/link";
+
+// Icon mapping based on job title keywords
+const getIconForJob = (title) => {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes('lễ tân') || lowerTitle.includes('receptionist')) return 'concierge';
+    if (lowerTitle.includes('nhà hàng') || lowerTitle.includes('restaurant')) return 'restaurant';
+    if (lowerTitle.includes('buồng phòng') || lowerTitle.includes('housekeeping')) return 'bed';
+    if (lowerTitle.includes('hướng dẫn') || lowerTitle.includes('tour guide')) return 'map';
+    if (lowerTitle.includes('đầu bếp') || lowerTitle.includes('chef')) return 'restaurant_menu';
+    if (lowerTitle.includes('bartender') || lowerTitle.includes('pha chế')) return 'local_bar';
+    return 'work';
+};
+
 export default function JobsPage() {
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchJobs();
+    }, []);
+
+    const fetchJobs = async () => {
+        try {
+            const response = await fetch('/api/jobs');
+            const data = await response.json();
+            // Only show active jobs
+            setJobs(data.filter(job => job.status === 'active'));
+        } catch (error) {
+            console.error('Error fetching jobs:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             {/* Hero Section */}
@@ -40,148 +75,60 @@ export default function JobsPage() {
                 </div>
 
                 {/* Job Listings */}
-                <div className="space-y-4">
-                    {/* Job Card 1 */}
-                    <div className="group bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-[#13a4ec]/30 transition-all duration-300">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div className="flex gap-5">
-                                <div className="size-14 md:size-16 rounded-xl bg-[#13a4ec]/10 flex items-center justify-center shrink-0">
-                                    <span className="material-symbols-outlined !text-[32px] text-[#13a4ec]">concierge</span>
-                                </div>
-                                <div className="space-y-1.5">
-                                    <h3 className="text-[#111618] dark:text-white text-xl font-bold group-hover:text-[#13a4ec] transition-colors">Lễ tân (Receptionist)</h3>
-                                    <div className="flex flex-wrap gap-y-2 gap-x-4">
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">location_on</span>
-                                            <span>Phú Quốc</span>
+                {loading ? (
+                    <div className="text-center py-12">
+                        <p className="text-[#617c89]">Đang tải...</p>
+                    </div>
+                ) : jobs.length === 0 ? (
+                    <div className="text-center py-12">
+                        <p className="text-[#617c89]">Không tìm thấy công việc nào.</p>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {jobs.map((job) => (
+                            <div key={job.id} className="group bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-[#13a4ec]/30 transition-all duration-300">
+                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                    <div className="flex gap-5">
+                                        <div className="size-14 md:size-16 rounded-xl bg-[#13a4ec]/10 flex items-center justify-center shrink-0">
+                                            <span className="material-symbols-outlined !text-[32px] text-[#13a4ec]">{getIconForJob(job.title)}</span>
                                         </div>
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">work</span>
-                                            <span>Toàn thời gian</span>
+                                        <div className="space-y-1.5">
+                                            <h3 className="text-[#111618] dark:text-white text-xl font-bold group-hover:text-[#13a4ec] transition-colors">{job.title}</h3>
+                                            <div className="flex flex-wrap gap-y-2 gap-x-4">
+                                                <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
+                                                    <span className="material-symbols-outlined !text-[18px]">location_on</span>
+                                                    <span>{job.location}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
+                                                    <span className="material-symbols-outlined !text-[18px]">work</span>
+                                                    <span>{job.type}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-[#13a4ec] text-sm font-semibold">
+                                                    <span className="material-symbols-outlined !text-[18px]">payments</span>
+                                                    <span>{job.salary}</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-1.5 text-[#13a4ec] text-sm font-semibold">
-                                            <span className="material-symbols-outlined !text-[18px]">payments</span>
-                                            <span>8 - 12 triệu VNĐ</span>
-                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <Link href={`/jobs/${job.id}`}>
+                                            <button className="flex-1 md:flex-none min-w-[140px] px-6 py-2.5 bg-[#13a4ec]/10 text-[#13a4ec] hover:bg-[#13a4ec] hover:text-white text-sm font-bold rounded-xl transition-all duration-200">
+                                                Xem chi tiết
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <button className="flex-1 md:flex-none min-w-[140px] px-6 py-2.5 bg-[#13a4ec]/10 text-[#13a4ec] hover:bg-[#13a4ec] hover:text-white text-sm font-bold rounded-xl transition-all duration-200">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
+                        ))}
                     </div>
+                )}
 
-                    {/* Job Card 2 */}
-                    <div className="group bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-[#13a4ec]/30 transition-all duration-300">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div className="flex gap-5">
-                                <div className="size-14 md:size-16 rounded-xl bg-[#13a4ec]/10 flex items-center justify-center shrink-0">
-                                    <span className="material-symbols-outlined !text-[32px] text-[#13a4ec]">restaurant</span>
-                                </div>
-                                <div className="space-y-1.5">
-                                    <h3 className="text-[#111618] dark:text-white text-xl font-bold group-hover:text-[#13a4ec] transition-colors">Nhân viên nhà hàng</h3>
-                                    <div className="flex flex-wrap gap-y-2 gap-x-4">
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">location_on</span>
-                                            <span>Phú Quốc</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">work</span>
-                                            <span>Toàn thời gian</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[#13a4ec] text-sm font-semibold">
-                                            <span className="material-symbols-outlined !text-[18px]">payments</span>
-                                            <span>7 - 10 triệu VNĐ</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <button className="flex-1 md:flex-none min-w-[140px] px-6 py-2.5 bg-[#13a4ec]/10 text-[#13a4ec] hover:bg-[#13a4ec] hover:text-white text-sm font-bold rounded-xl transition-all duration-200">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
+                {/* Job Count */}
+                {!loading && jobs.length > 0 && (
+                    <div className="mt-12 text-center">
+                        <p className="text-[#617c89] text-sm">Hiển thị {jobs.length} vị trí đang tuyển dụng</p>
                     </div>
-
-                    {/* Job Card 3 */}
-                    <div className="group bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-[#13a4ec]/30 transition-all duration-300">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div className="flex gap-5">
-                                <div className="size-14 md:size-16 rounded-xl bg-[#13a4ec]/10 flex items-center justify-center shrink-0">
-                                    <span className="material-symbols-outlined !text-[32px] text-[#13a4ec]">bed</span>
-                                </div>
-                                <div className="space-y-1.5">
-                                    <h3 className="text-[#111618] dark:text-white text-xl font-bold group-hover:text-[#13a4ec] transition-colors">Nhân viên buồng phòng</h3>
-                                    <div className="flex flex-wrap gap-y-2 gap-x-4">
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">location_on</span>
-                                            <span>Phú Quốc</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">work</span>
-                                            <span>Toàn thời gian</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[#13a4ec] text-sm font-semibold">
-                                            <span className="material-symbols-outlined !text-[18px]">payments</span>
-                                            <span>Thoả thuận</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <button className="flex-1 md:flex-none min-w-[140px] px-6 py-2.5 bg-[#13a4ec]/10 text-[#13a4ec] hover:bg-[#13a4ec] hover:text-white text-sm font-bold rounded-xl transition-all duration-200">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Job Card 4 */}
-                    <div className="group bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-[#13a4ec]/30 transition-all duration-300">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div className="flex gap-5">
-                                <div className="size-14 md:size-16 rounded-xl bg-[#13a4ec]/10 flex items-center justify-center shrink-0">
-                                    <span className="material-symbols-outlined !text-[32px] text-[#13a4ec]">map</span>
-                                </div>
-                                <div className="space-y-1.5">
-                                    <h3 className="text-[#111618] dark:text-white text-xl font-bold group-hover:text-[#13a4ec] transition-colors">Hướng dẫn viên du lịch</h3>
-                                    <div className="flex flex-wrap gap-y-2 gap-x-4">
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">location_on</span>
-                                            <span>Phú Quốc</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                            <span className="material-symbols-outlined !text-[18px]">work</span>
-                                            <span>Toàn thời gian</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[#13a4ec] text-sm font-semibold">
-                                            <span className="material-symbols-outlined !text-[18px]">payments</span>
-                                            <span>10 - 15 triệu VNĐ</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <button className="flex-1 md:flex-none min-w-[140px] px-6 py-2.5 bg-[#13a4ec]/10 text-[#13a4ec] hover:bg-[#13a4ec] hover:text-white text-sm font-bold rounded-xl transition-all duration-200">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Load More Section */}
-                <div className="mt-12 text-center">
-                    <button className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border-2 border-[#13a4ec] text-[#13a4ec] font-bold hover:bg-[#13a4ec]/5 transition-colors">
-                        Xem thêm công việc
-                        <span className="material-symbols-outlined">expand_more</span>
-                    </button>
-                    <p className="mt-4 text-[#617c89] text-sm">Hiển thị 4 trên 24 vị trí đang tuyển dụng</p>
-                </div>
+                )}
             </main>
         </>
     );

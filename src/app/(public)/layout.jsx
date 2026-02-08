@@ -25,37 +25,11 @@ export default function PublicLayout({ children }) {
                         </button>
                     </div>
                 </header>
-                
+
                 {/* Main Content */}
                 <main className="flex-1">
                     {children}
                 </main>
-                
-                {/* Footer */}
-                <footer className="flex flex-col gap-8 px-6 lg:px-40 py-12 border-t border-[#f0f3f4] dark:border-[#1e2d35] bg-white dark:bg-[#101c22]">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-                        <div className="flex items-center gap-3 opacity-60">
-                            <span className="material-symbols-outlined text-[#13a4ec]">sailing</span>
-                            <span className="text-sm font-bold dark:text-white uppercase tracking-widest">Phu Quoc Travel</span>
-                        </div>
-                        <div className="flex gap-8">
-                            <a className="text-[#617c89] text-sm hover:text-[#13a4ec] transition-colors" href="#">Chính sách bảo mật</a>
-                            <a className="text-[#617c89] text-sm hover:text-[#13a4ec] transition-colors" href="#">Điều khoản</a>
-                            <a className="text-[#617c89] text-sm hover:text-[#13a4ec] transition-colors" href="#">Liên hệ</a>
-                        </div>
-                        <div className="flex gap-4">
-                            <a className="size-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-[#13a4ec] hover:text-white transition-all" href="#">
-                                <span className="material-symbols-outlined">share</span>
-                            </a>
-                            <a className="size-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-[#13a4ec] hover:text-white transition-all" href="#">
-                                <span className="material-symbols-outlined">mail</span>
-                            </a>
-                        </div>
-                    </div>
-                    <p className="text-center text-xs text-[#617c89] dark:text-gray-500">
-                        © 2024 Phu Quoc Travel Recruitment. Bản quyền thuộc về Đảo Ngọc.
-                    </p>
-                </footer>
             </div>
         </div>
     );

@@ -138,9 +138,9 @@ export default function ApplyPage() {
                 </svg>
             </div>
 
-            <div className="w-full max-w-xl bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] border border-gray-100">
+            <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] border border-gray-100">
                 {/* Header */}
-                <div className="px-8 pt-8 pb-4 flex justify-between items-start flex-shrink-0">
+                <div className="px-8 pt-6 pb-3 flex justify-between items-start flex-shrink-0">
                     <div>
                         <span className="inline-block px-3 py-1 bg-teal-100 text-teal-600 text-[10px] font-bold rounded-full uppercase tracking-widest mb-3">
                             Thông tin ứng tuyển
@@ -158,7 +158,7 @@ export default function ApplyPage() {
 
                 {/* Form */}
                 <div className="flex-1 overflow-y-auto px-8">
-                    <form onSubmit={handleSubmit} className="space-y-5 pb-8">
+                    <form onSubmit={handleSubmit} className="space-y-4 pb-6">
                         {/* CV Upload */}
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-semibold text-gray-700">
@@ -171,9 +171,9 @@ export default function ApplyPage() {
                                     type="file"
                                     onChange={handleFileChange}
                                 />
-                                <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center gap-2 bg-gray-50 group-hover:border-teal-400 group-hover:bg-teal-50 transition-all">
-                                    <div className="size-12 rounded-full bg-white shadow-sm flex items-center justify-center text-teal-500 mb-1">
-                                        <span className="material-symbols-outlined text-3xl">cloud_upload</span>
+                                <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center gap-2 bg-gray-50 group-hover:border-teal-400 group-hover:bg-teal-50 transition-all">
+                                    <div className="size-10 rounded-full bg-white shadow-sm flex items-center justify-center text-teal-500">
+                                        <span className="material-symbols-outlined text-2xl">cloud_upload</span>
                                     </div>
                                     <p className="text-sm font-medium text-gray-700">
                                         {formData.resume ? formData.resume.name : 'Kéo thả hoặc nhấn để chọn tệp'}
@@ -211,7 +211,7 @@ export default function ApplyPage() {
                         </div>
 
                         {/* Name and Birth Year */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-semibold text-gray-700">
                                     Họ và tên <span className="text-red-500">*</span>
@@ -289,14 +289,14 @@ export default function ApplyPage() {
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all outline-none resize-none"
                                 placeholder="Chia sẻ thêm về kinh nghiệm của bạn..."
-                                rows="3"
+                                rows="2"
                             ></textarea>
                         </div>
                     </form>
                 </div>
 
                 {/* Submit Button */}
-                <div className="px-8 py-6 border-t border-gray-100 bg-white/50 backdrop-blur-sm flex-shrink-0">
+                <div className="px-8 py-4 border-t border-gray-100 bg-white/50 backdrop-blur-sm flex-shrink-0">
                     <button
                         onClick={handleSubmit}
                         disabled={loading}
@@ -306,7 +306,7 @@ export default function ApplyPage() {
                         <span>{loading ? 'Đang gửi...' : 'Gửi hồ sơ ngay'}</span>
                         {!loading && <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">send</span>}
                     </button>
-                    <p className="mt-4 text-center text-[10px] text-gray-400">
+                    <p className="mt-3 text-center text-[10px] text-gray-400">
                         Bằng việc nhấn "Gửi hồ sơ", bạn đồng ý với Điều khoản và Chính sách của chúng tôi.
                     </p>
                 </div>

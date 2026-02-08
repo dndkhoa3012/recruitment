@@ -49,8 +49,18 @@ const data = {
     },
     {
       title: "Việc làm",
-      url: "/admin/jobs",
+      url: "#",
       icon: IconBriefcase,
+      items: [
+        {
+          title: "Công việc",
+          url: "/admin/jobs",
+        },
+        {
+          title: "Danh mục công việc",
+          url: "/admin/categories",
+        },
+      ],
     },
     {
       title: "Ứng viên",
