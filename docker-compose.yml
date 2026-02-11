@@ -32,7 +32,7 @@ services:
       NEXTAUTH_SECRET: "phuquoctrip-recruitment-secret-2024-very-long-and-secure"
       NEXTAUTH_URL: "https://tuyendung.phuquoctrip.com"
     ports:
-      - "3001:3000"
+      - "3005:3000"
     depends_on:
       db:
         condition: service_healthy
