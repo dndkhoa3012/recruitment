@@ -65,3 +65,129 @@ model Candidate {
   @@index([jobId])
   @@index([email])
 }
+
+// ==========================================
+// LEGACY MODELS (Required for build)
+// ==========================================
+
+model Menu {
+  id          String        @id @default(uuid())
+  name        String
+  price       String?
+  description String?       @db.Text
+  image       String?       @db.Text
+  categoryId  String
+  category    MenuCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([categoryId])
+}
+
+model MenuCategory {
+  id          String   @id @default(uuid())
+  name        String
+  color       String?  @default("default")
+  layoutType  String?  @default("grid")
+  isFeatured  Boolean  @default(false)
+  menus       Menu[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryCategory {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  collections GalleryCollection[]
+  images      GalleryImage[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryCollection {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  coverImage  String?  @db.Text
+  categoryId  String
+  category    GalleryCategory @relation(fields: [categoryId], references: [id])
+  images      GalleryImage[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryImage {
+  id           String   @id @default(uuid())
+  src          String   @db.Text
+  alt          String?
+  collectionId String?
+  collection   GalleryCollection? @relation(fields: [collectionId], references: [id])
+  categoryId   String?
+  category     GalleryCategory? @relation(fields: [categoryId], references: [id])
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Banner {
+  id          String   @id @default(uuid())
+  pageType    String
+  deviceType  String   @default("DESKTOP")
+  title       String?
+  subtitle    String?
+  imageUrls   Json
+  altText     String?
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  customerName String
+  phoneNumber  String
+  email        String?
+  bookingDate  DateTime
+  time         String
+  guestCount   Int
+  area         String?
+  note         String?
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model EventCategory {
+  id        String   @id @default(uuid())
+  name      String
+  color     String?  @default("default")
+  events    Event[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String         @id @default(uuid())
+  name        String
+  date        DateTime
+  poster      String?        @db.Text
+  description String?        @db.Text
+  content     String?        @db.Text
+  location    String?
+  price       Int            @default(0)
+  startTime   String?
+  endTime     String?
+  isFeatured  Boolean        @default(false)
+  isHidden    Boolean        @default(false)
+  
+  categoryId  String?
+  category    EventCategory? @relation(fields: [categoryId], references: [id])
+  
+  itinerary   Json?
+  timeline    Json?
+  
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}

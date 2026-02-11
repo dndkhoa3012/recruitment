@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "motion/react";
 import { ArrowLeft, X } from "lucide-react";
 
-export default function CollectionViewPage() {
+export const dynamic = 'force-dynamic';
+
+function CollectionContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
@@ -252,5 +254,13 @@ export default function CollectionViewPage() {
                 }
             `}</style>
         </div>
+    );
+}
+
+export default function CollectionViewPage() {
+    return (
+        <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
+            <CollectionContent />
+        </Suspense>
     );
 }

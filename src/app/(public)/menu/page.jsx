@@ -3,6 +3,8 @@ import { Tabs } from "antd";
 import { prisma } from "@/lib/prisma";
 import { MenuSection } from "./components/menu-section";
 
+export const dynamic = 'force-dynamic';
+
 // Server Component (default in App Router)
 export default async function MenuPage() {
     // Fetch categories with menus

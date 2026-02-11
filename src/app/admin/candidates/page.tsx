@@ -99,7 +99,7 @@ export default function CandidatesPage() {
             dataIndex: 'fullName',
             key: 'fullName',
             width: 200,
-            fixed: 'left',
+            fixed: 'left' as const,
             render: (text, record) => (
                 <Link href={`/admin/candidates/${record.id}`} className="text-blue-600 hover:underline">
                     {text}
@@ -170,7 +170,7 @@ export default function CandidatesPage() {
             title: 'Hành động',
             key: 'actions',
             width: 150,
-            fixed: 'right',
+            fixed: 'right' as const,
             render: (_, record) => (
                 <Space>
                     <Button
