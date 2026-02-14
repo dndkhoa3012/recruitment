@@ -45,3 +45,12 @@ npx prisma studio
 npx prisma migrate dev --name init
 # 5. chạy prisma generate
 npx prisma generate
+
+# 6. chạy prisma db push
+npx prisma db push
+
+# 7. Tắt server
+docker compose down
+
+# 8. Chạy lại server
+docker compose up -d --build

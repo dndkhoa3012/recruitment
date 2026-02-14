@@ -138,15 +138,8 @@ export default function JobsPage() {
                                                     <span>{job.location}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1.5 text-[#617c89] dark:text-gray-400 text-sm">
-                                                    <span className="material-symbols-outlined !text-[18px]">work</span>
-                                                    <span>
-                                                        {{
-                                                            'full-time': 'Toàn thời gian',
-                                                            'part-time': 'Bán thời gian',
-                                                            'contract': 'Hợp đồng',
-                                                            'internship': 'Thực tập'
-                                                        }[job.type] || job.type}
-                                                    </span>
+                                                    <span className="material-symbols-outlined !text-[18px]">group</span>
+                                                    <span>Số lượng: {String(job.quantity || 1).padStart(2, '0')}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1.5 text-[#13a4ec] text-sm font-semibold">
                                                     <span className="material-symbols-outlined !text-[18px]">payments</span>
