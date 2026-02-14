@@ -10,10 +10,17 @@ export async function GET(
 ) {
     try {
         const params = await props.params;
-        const candidate = await prisma.candidate.findUnique({
-            where: { id: params.id },
+        const candidate = await prisma.candidate.findFirst({
+            where: {
+                id: params.id,
+                deletedAt: null
+            },
             include: {
-                job: true
+                job: {
+                    include: {
+                        category: true
+                    }
+                }
             }
         })
 
@@ -65,8 +72,11 @@ export async function DELETE(
 ) {
     try {
         const params = await props.params;
-        await prisma.candidate.delete({
-            where: { id: params.id }
+        await prisma.candidate.update({
+            where: { id: params.id },
+            data: {
+                deletedAt: new Date()
+            }
         })
 
         return NextResponse.json({ message: 'Candidate deleted successfully' })

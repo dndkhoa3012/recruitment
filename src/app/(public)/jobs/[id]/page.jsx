@@ -87,11 +87,16 @@ export default function JobDetailPage() {
                         <div className="flex-1">
                             <div className="flex flex-wrap items-center gap-2 mb-2">
                                 <span className="px-2 py-1 bg-[#13a4ec]/10 text-[#13a4ec] text-xs font-bold rounded uppercase tracking-wider">
-                                    {job.type === 'full-time' ? 'Toàn thời gian' : job.type === 'part-time' ? 'Bán thời gian' : job.type === 'internship' ? 'Thực tập' : job.type}
+                                    {{
+                                        'full-time': 'Toàn thời gian',
+                                        'part-time': 'Bán thời gian',
+                                        'contract': 'Hợp đồng',
+                                        'internship': 'Thực tập'
+                                    }[job.type] || job.type}
                                 </span>
                             </div>
                             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">{job.title}</h2>
-                            <p className="text-gray-600 dark:text-gray-400 font-medium mb-4">{job.department || 'Phú Quốc Travel'}</p>
+                            <p className="text-gray-600 dark:text-gray-400 font-medium mb-4">{job.department || job.category?.name}</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
                                     <span className="material-symbols-outlined text-[#13a4ec]">location_on</span>
@@ -179,12 +184,8 @@ export default function JobDetailPage() {
 
             {/* Sticky Footer Actions */}
             <footer className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#101c22] border-t border-gray-200 dark:border-gray-800 p-4 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-                <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-3">
-                    <button className="flex-1 flex items-center justify-center gap-2 bg-[#0068FF] hover:bg-[#0052cc] text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                        <span className="material-symbols-outlined">chat</span>
-                        Liên hệ qua Zalo
-                    </button>
-                    <Link href="/apply" className="flex-[2]">
+                <div className="max-w-4xl mx-auto">
+                    <Link href={`/apply?jobId=${job.id}&jobTitle=${encodeURIComponent(job.title)}`}>
                         <button className="w-full flex items-center justify-center gap-2 bg-[#13a4ec] hover:bg-[#13a4ec]/90 text-white font-bold py-3 px-6 rounded-lg shadow-lg shadow-[#13a4ec]/20 transition-transform active:scale-[0.98]">
                             Ứng tuyển ngay
                             <span className="material-symbols-outlined">arrow_forward</span>

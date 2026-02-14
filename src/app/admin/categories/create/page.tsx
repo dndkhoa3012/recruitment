@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, App } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import Link from 'next/link';
 const { TextArea } = Input;
 
 export default function CreateCategoryPage() {
+    const { message } = App.useApp();
     const router = useRouter();
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
@@ -64,8 +65,6 @@ export default function CreateCategoryPage() {
                         Quay lại
                     </Button>
                 </Link>
-                <h1 className="text-2xl font-bold text-gray-900 mt-4">Thêm danh mục mới</h1>
-                <p className="text-gray-500 mt-1">Tạo danh mục công việc mới</p>
             </div>
 
             <div className="max-w-2xl bg-white rounded-lg shadow p-6">

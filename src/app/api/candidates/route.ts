@@ -11,7 +11,9 @@ export async function GET(request: Request) {
         const jobId = searchParams.get('jobId')
         const search = searchParams.get('search')
 
-        const where: any = {}
+        const where: any = {
+            deletedAt: null
+        }
 
         if (status && status !== 'all') {
             where.status = status
@@ -26,6 +28,11 @@ export async function GET(request: Request) {
                 { fullName: { contains: search } },
                 { email: { contains: search } },
                 { phone: { contains: search } },
+                {
+                    job: {
+                        title: { contains: search }
+                    }
+                }
             ]
         }
 
@@ -37,7 +44,8 @@ export async function GET(request: Request) {
                     select: {
                         id: true,
                         title: true,
-                        department: true
+                        department: true,
+                        category: true
                     }
                 }
             }
@@ -47,7 +55,7 @@ export async function GET(request: Request) {
     } catch (error) {
         console.error('Error fetching candidates:', error)
         return NextResponse.json(
-            { error: 'Failed to fetch candidates' },
+            { error: `Failed to fetch candidates: ${(error as Error).message}` },
             { status: 500 }
         )
     }

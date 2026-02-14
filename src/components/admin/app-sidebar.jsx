@@ -146,9 +146,9 @@ export function AppSidebar({
             <SidebarMenuButton size="lg" asChild className="data-[slot=sidebar-menu-button]:!p-0 hover:bg-transparent">
               <a href="#" className="flex items-center justify-start pl-2">
                 <img
-                  src="/admin-logo.png"
-                  alt="Airwaves Beach Club"
-                  className="h-8 w-auto object-contain"
+                  src="/johns-tours-logo.png"
+                  alt="John's Tours Admin"
+                  className="h-9 w-auto object-contain max-w-[160px]"
                 />
               </a>
             </SidebarMenuButton>

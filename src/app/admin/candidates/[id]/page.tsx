@@ -1,12 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, Descriptions, Tag, Button, Spin, message } from "antd"
+import { Card, Descriptions, Tag, Button, Spin, App } from "antd"
 import { useRouter, useParams } from "next/navigation"
 import { ArrowLeftOutlined } from "@ant-design/icons"
 import dayjs from "dayjs"
 
 export default function CandidateDetailPage() {
+    const { message } = App.useApp()
     const router = useRouter()
     const params = useParams()
     const [candidate, setCandidate] = useState(null)
@@ -90,7 +91,7 @@ export default function CandidateDetailPage() {
                             <span className="font-semibold">{candidate.job.title}</span>
                         </Descriptions.Item>
                         <Descriptions.Item label="Phòng ban">
-                            {candidate.job.department || '-'}
+                            {candidate.job.category?.name || candidate.job.department || '-'}
                         </Descriptions.Item>
                         <Descriptions.Item label="Địa điểm">
                             {candidate.job.location}
@@ -117,9 +118,26 @@ export default function CandidateDetailPage() {
 
                 {candidate.resume && (
                     <Card title="Hồ sơ / CV" className="shadow-sm">
-                        <div className="whitespace-pre-wrap bg-gray-50 p-4 rounded">
-                            {candidate.resume}
-                        </div>
+                        {candidate.resume.startsWith('blob:') ? (
+                            <div className="bg-orange-50 p-4 rounded text-orange-600 border border-orange-200">
+                                <p className="font-medium">⚠️ File lỗi (Do phiên bản cũ)</p>
+                                <p className="text-sm mt-1">CV này được tải lên trước khi hệ thống lưu trữ file được cập nhật. Vui lòng yêu cầu ứng viên gửi lại qua email.</p>
+                            </div>
+                        ) : (
+                            <div className="bg-gray-50 p-4 rounded flex items-center justify-between">
+                                <span className="text-gray-600 truncate mr-4 font-medium">
+                                    {candidate.resume.split('/').pop().split('-').slice(1).join('-') || 'CV Document'}
+                                </span>
+                                <Button
+                                    type="primary"
+                                    href={candidate.resume}
+                                    target="_blank"
+                                    download
+                                >
+                                    Tải CV về
+                                </Button>
+                            </div>
+                        )}
                     </Card>
                 )}
             </div>

@@ -14,6 +14,7 @@ export default function EditCategoryPage() {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
+    const [initialValues, setInitialValues] = useState<any>(null);
 
     useEffect(() => {
         fetchCategory();
@@ -24,7 +25,7 @@ export default function EditCategoryPage() {
             const response = await fetch(`/api/categories/${params.id}`);
             if (response.ok) {
                 const category = await response.json();
-                form.setFieldsValue({
+                setInitialValues({
                     name: category.name,
                     slug: category.slug,
                     description: category.description
@@ -99,8 +100,6 @@ export default function EditCategoryPage() {
                         Quay lại
                     </Button>
                 </Link>
-                <h1 className="text-2xl font-bold text-gray-900 mt-4">Chỉnh sửa danh mục</h1>
-                <p className="text-gray-500 mt-1">Cập nhật thông tin danh mục</p>
             </div>
 
             <div className="max-w-2xl bg-white rounded-lg shadow p-6">
@@ -109,6 +108,7 @@ export default function EditCategoryPage() {
                     layout="vertical"
                     onFinish={onFinish}
                     autoComplete="off"
+                    initialValues={initialValues}
                 >
                     <Form.Item
                         label="Tên danh mục"

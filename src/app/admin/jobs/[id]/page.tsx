@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Form, Input, Select, DatePicker, Button, message, Spin, Alert } from "antd"
+import { Form, Input, Select, DatePicker, Button, App, Spin, Alert } from "antd"
 import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
 import dayjs from "dayjs"
@@ -10,12 +10,14 @@ import RequirementsEditor from "@/components/admin/RequirementsEditor"
 import BenefitsEditor from "@/components/admin/BenefitsEditor"
 
 export default function EditJobPage() {
+    const { message } = App.useApp()
     const router = useRouter()
     const params = useParams()
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(true)
     const [categories, setCategories] = useState([])
     const [loadingCategories, setLoadingCategories] = useState(true)
+    const [initialValues, setInitialValues] = useState<any>(null)
 
     useEffect(() => {
         fetchCategories()
@@ -70,7 +72,7 @@ export default function EditJobPage() {
                 benefits = []
             }
 
-            form.setFieldsValue({
+            setInitialValues({
                 ...job,
                 description,
                 requirements,
@@ -121,22 +123,19 @@ export default function EditJobPage() {
 
     return (
         <div className="p-6">
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold">Chỉnh sửa việc làm</h1>
-            </div>
-
             <div className="bg-white p-6 rounded-lg max-w-4xl">
                 <Form
                     form={form}
                     layout="vertical"
                     onFinish={onFinish}
+                    initialValues={initialValues}
                 >
                     <Form.Item
                         label="Tiêu đề"
                         name="title"
                         rules={[{ required: true, message: 'Vui lòng nhập tiêu đề' }]}
                     >
-                        <Input placeholder="VD: Full Stack Developer" />
+                        <Input placeholder="VD: Nhân viên kinh doanh" />
                     </Form.Item>
 
                     <div className="grid grid-cols-2 gap-4">

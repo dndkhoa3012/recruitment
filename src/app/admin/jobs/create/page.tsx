@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Form, Input, Select, DatePicker, Button, message, Alert } from "antd"
+import { Form, Input, Select, DatePicker, Button, App, Alert } from "antd"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import dayjs from "dayjs"
@@ -10,6 +10,7 @@ import RequirementsEditor from "@/components/admin/RequirementsEditor"
 import BenefitsEditor from "@/components/admin/BenefitsEditor"
 
 export default function CreateJobPage() {
+    const { message } = App.useApp()
     const router = useRouter()
     const [form] = Form.useForm()
     const [categories, setCategories] = useState([])
@@ -62,9 +63,7 @@ export default function CreateJobPage() {
 
     return (
         <div className="p-6">
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold">Tạo việc làm mới</h1>
-            </div>
+
 
             <div className="bg-white p-6 rounded-lg max-w-4xl">
                 <Form
@@ -84,7 +83,7 @@ export default function CreateJobPage() {
                         name="title"
                         rules={[{ required: true, message: 'Vui lòng nhập tiêu đề' }]}
                     >
-                        <Input placeholder="VD: Full Stack Developer" />
+                        <Input placeholder="VD: Nhân viên kinh doanh" />
                     </Form.Item>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -110,7 +109,7 @@ export default function CreateJobPage() {
                             name="location"
                             rules={[{ required: true, message: 'Vui lòng nhập địa điểm' }]}
                         >
-                            <Input placeholder="VD: Hồ Chí Minh" />
+                            <Input placeholder="VD: Dương Đông" />
                         </Form.Item>
                     </div>
 

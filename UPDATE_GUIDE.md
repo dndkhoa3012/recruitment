@@ -34,3 +34,14 @@ docker compose up -d --build
 - Anh **KHÔNG** cần chỉnh sửa Nginx nữa (trừ khi đổi tên miền).
 - Anh **KHÔNG** cần chỉnh sửa Database (Docker sẽ tự chạy migration nếu có).
 - Web sẽ bị gián đoạn khoảng 30s - 1 phút trong lúc khởi động lại.
+
+# 1. tắt next dev
+kill $(lsof -t -i:3000)
+# 2. chạy next dev
+npm run dev 
+# 3. chạy prisma studio
+npx prisma studio
+# 4. chạy prisma migrate
+npx prisma migrate dev --name init
+# 5. chạy prisma generate
+npx prisma generate

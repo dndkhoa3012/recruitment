@@ -1,7 +1,7 @@
 import { Plus_Jakarta_Sans, Noto_Sans } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, App } from 'antd';
 
 
 const jakarta = Plus_Jakarta_Sans({
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased bg-white text-slate-900 font-display">
+      <body className="antialiased bg-white text-slate-900 font-display" suppressHydrationWarning={true}>
         <AntdRegistry>
           <ConfigProvider
             theme={{
@@ -38,7 +38,9 @@ export default function RootLayout({ children }) {
               },
             }}
           >
-            {children}
+            <App>
+              {children}
+            </App>
           </ConfigProvider>
         </AntdRegistry>
       </body>

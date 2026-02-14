@@ -22,12 +22,11 @@ export default function HomePage() {
                                 </p>
                             </div>
                             <div className="flex flex-wrap gap-4">
-                                <button className="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-[#13a4ec] text-white text-lg font-bold shadow-lg shadow-[#13a4ec]/30 hover:scale-105 transition-transform">
-                                    <span className="truncate">Ứng tuyển ngay</span>
-                                </button>
-                                <button className="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-700 text-[#111618] dark:text-white text-lg font-bold hover:bg-gray-50 transition-colors">
-                                    <span className="truncate">Về chúng tôi</span>
-                                </button>
+                                <a href="/jobs">
+                                    <button className="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-[#13a4ec] text-white text-lg font-bold shadow-lg shadow-[#13a4ec]/30 hover:scale-105 transition-transform">
+                                        <span className="truncate">Ứng tuyển ngay</span>
+                                    </button>
+                                </a>
                             </div>
                             <div className="flex items-center gap-6 pt-4 border-t border-gray-100 dark:border-gray-800">
                                 <div className="flex -space-x-3">

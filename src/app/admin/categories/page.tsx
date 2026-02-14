@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Table, Button, message, Popconfirm, Input, Tag } from 'antd';
+import { Table, Button, App, Popconfirm, Input, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function CategoriesPage() {
+    const { message } = App.useApp();
     const router = useRouter();
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -131,13 +132,9 @@ export default function CategoriesPage() {
 
     return (
         <div className="p-6">
-            <div className="mb-6 flex justify-between items-center">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Danh mục công việc</h1>
-                    <p className="text-gray-500 mt-1">Quản lý các danh mục công việc</p>
-                </div>
+            <div className="mb-6 flex justify-end items-center">
                 <Link href="/admin/categories/create">
-                    <Button type="primary" icon={<PlusOutlined />} size="large">
+                    <Button type="primary" icon={<PlusOutlined />}>
                         Thêm danh mục
                     </Button>
                 </Link>

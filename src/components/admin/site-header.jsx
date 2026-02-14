@@ -23,6 +23,20 @@ export function SiteHeader() {
 
     if (path === "/admin") return "Tổng quan"
 
+    // Jobs
+    if (path === "/admin/jobs") return "Quản lý Việc làm"
+    if (path === "/admin/jobs/create") return "Tạo việc làm mới"
+    if (path.startsWith("/admin/jobs/")) return "Chỉnh sửa việc làm"
+
+    // Categories
+    if (path === "/admin/categories") return "Danh mục công việc"
+    if (path === "/admin/categories/create") return "Tạo danh mục"
+    if (path.startsWith("/admin/categories/")) return "Chỉnh sửa danh mục"
+
+    // Candidates
+    if (path === "/admin/candidates") return "Quản lý Ứng viên"
+    if (path.startsWith("/admin/candidates/")) return "Chi tiết ứng viên"
+
     // Prefix matches (for Edit pages with IDs)
     if (path.startsWith("/admin/menu/")) return "Chỉnh sửa thực đơn"
     if (path.startsWith("/admin/events/")) return "Chỉnh sửa sự kiện"

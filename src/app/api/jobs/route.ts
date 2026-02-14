@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url)
         const status = searchParams.get('status')
-        const department = searchParams.get('department')
+        const categoryId = searchParams.get('categoryId')
         const search = searchParams.get('search')
 
         const where: any = {}
@@ -17,8 +17,8 @@ export async function GET(request: Request) {
             where.status = status
         }
 
-        if (department && department !== 'all') {
-            where.department = department
+        if (categoryId && categoryId !== 'all') {
+            where.categoryId = categoryId
         }
 
         if (search) {
@@ -34,7 +34,8 @@ export async function GET(request: Request) {
             include: {
                 _count: {
                     select: { candidates: true }
-                }
+                },
+                category: true
             }
         })
 
@@ -42,7 +43,7 @@ export async function GET(request: Request) {
     } catch (error) {
         console.error('Error fetching jobs:', error)
         return NextResponse.json(
-            { error: 'Failed to fetch jobs' },
+            { error: error instanceof Error ? error.message : 'Failed to fetch jobs' },
             { status: 500 }
         )
     }
@@ -55,6 +56,7 @@ export async function POST(request: Request) {
         const {
             title,
             department,
+            categoryId,
             location,
             type,
             salary,
@@ -68,6 +70,7 @@ export async function POST(request: Request) {
             data: {
                 title,
                 department,
+                categoryId,
                 location,
                 type: type || 'full-time',
                 salary,

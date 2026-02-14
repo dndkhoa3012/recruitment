@@ -3,13 +3,45 @@ import React from 'react';
 import { GravityStars } from '@/components/public/GravityStars';
 import { Input, Button, Form } from 'antd';
 import { LockOutlined, UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
+import { App } from 'antd';
 import Link from 'next/link';
 
 export default function AdminLoginPage() {
-    const onFinish = (values) => {
-        console.log('Success:', values);
-        // Here you would implement login logic and redirect
-        // window.location.href = "/admin/dashboard";
+    const router = useRouter();
+    const { message } = App.useApp();
+    const [loading, setLoading] = React.useState(false);
+
+    const onFinish = async (values) => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || 'Đăng nhập thất bại');
+            }
+
+            message.success('Đăng nhập thành công!');
+
+            // Store user info
+            localStorage.setItem('currentUser', JSON.stringify(data.user));
+
+            // Redirect to admin
+            router.push('/admin');
+
+        } catch (error) {
+            message.error(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -64,6 +96,7 @@ export default function AdminLoginPage() {
                             <Button
                                 type="primary"
                                 htmlType="submit"
+                                loading={loading}
                                 className="w-full h-12 rounded-xl bg-green-500 hover:bg-green-600 shadow-lg shadow-green-500/30 font-bold text-base flex items-center justify-center gap-2"
                             >
                                 Đăng nhập <ArrowRightOutlined />

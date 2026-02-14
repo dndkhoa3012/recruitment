@@ -61,9 +61,19 @@ model Candidate {
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deletedAt   DateTime? // Soft delete timestamp
   
   @@index([jobId])
   @@index([email])
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String   // Hashed password
+  role      String   @default("admin") // admin, editor
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 

@@ -87,6 +87,28 @@ async function main() {
         }
     }
 
+
+
+    // Seed Admin User
+    const adminUser = await prisma.user.findUnique({ where: { username: 'admin' } });
+    if (!adminUser) {
+        // Only create if not exists
+        // In a real app, password should be hashed. Here we store plain text for simplicity or use a hash function if bcrypt is available.
+        // Assuming simple usage or bcrypt logic to be added later in auth flow.
+        // For now, let's store it as is or a placeholder hash. 
+        // Let's use a simple placeholder or clear text if user hasn't set up hashing yet.
+        await prisma.user.create({
+            data: {
+                username: 'admin',
+                password: 'admin123', // TODO: Hash this in production!
+                role: 'admin'
+            }
+        });
+        console.log('Created admin user: admin');
+    } else {
+        console.log('Admin user already exists');
+    }
+
     console.log(`Seeding finished.`)
 }
 

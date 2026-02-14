@@ -1,33 +1,28 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Table, Button, Input, Select, Tag, Space, Popconfirm, message } from "antd"
+import { useState, useEffect, useRef } from "react"
+import { Table, Button, Input, Select, Tag, Space, Popconfirm, App, Switch } from "antd"
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import dayjs from "dayjs"
 
-const { Search } = Input
-
 export default function JobsPage() {
+    const { message } = App.useApp()
     const router = useRouter()
     const [jobs, setJobs] = useState([])
     const [loading, setLoading] = useState(true)
-    const [filters, setFilters] = useState({
-        status: 'all',
-        department: 'all',
-        search: ''
-    })
+
+    // Search states
+    const [searchText, setSearchText] = useState('')
+    const [searchedColumn, setSearchedColumn] = useState('')
+    const searchInput = useRef(null)
 
     const fetchJobs = async () => {
         try {
             setLoading(true)
-            const params = new URLSearchParams()
-            if (filters.status !== 'all') params.append('status', filters.status)
-            if (filters.department !== 'all') params.append('department', filters.department)
-            if (filters.search) params.append('search', filters.search)
-
-            const response = await fetch(`/api/jobs?${params.toString()}`)
+            // Fetch all jobs for client-side filtering
+            const response = await fetch('/api/jobs')
             if (!response.ok) {
                 throw new Error('Failed to fetch jobs')
             }
@@ -44,7 +39,7 @@ export default function JobsPage() {
 
     useEffect(() => {
         fetchJobs()
-    }, [filters])
+    }, [])
 
     const handleDelete = async (id) => {
         try {
@@ -83,6 +78,76 @@ export default function JobsPage() {
         }
     }
 
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm()
+        setSearchText(selectedKeys[0])
+        setSearchedColumn(dataIndex)
+    }
+
+    const handleReset = (clearFilters) => {
+        clearFilters()
+        setSearchText('')
+    }
+
+    const getColumnSearchProps = (dataIndex: string, nestedPath: string[] | null = null) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }: any) => (
+            <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Tìm kiếm`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Tìm
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Xóa
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            close()
+                        }}
+                    >
+                        Đóng
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: (filtered) => (
+            <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+        ),
+        onFilter: (value, record) => {
+            if (nestedPath) {
+                const text = nestedPath.reduce((obj, key) => obj && obj[key], record)
+                return text ? text.toString().toLowerCase().includes(value.toLowerCase()) : false
+            }
+            return record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : false
+        },
+        filterDropdownProps: {
+            onOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100)
+                }
+            },
+        },
+    })
+
     const columns = [
         {
             title: 'Tiêu đề',
@@ -90,6 +155,7 @@ export default function JobsPage() {
             key: 'title',
             width: 250,
             fixed: 'left' as const,
+            ...getColumnSearchProps('title'),
             render: (text, record) => (
                 <Link href={`/admin/jobs/${record.id}`} className="text-blue-600 hover:underline">
                     {text}
@@ -98,21 +164,38 @@ export default function JobsPage() {
         },
         {
             title: 'Phòng ban',
-            dataIndex: 'department',
-            key: 'department',
+            dataIndex: 'category',
+            key: 'category',
             width: 150,
+            ...getColumnSearchProps('category'), // Use generic props, override onFilter below
+            onFilter: (value, record: any) => {
+                const categoryName = record.category?.name || '';
+                const departmentName = record.department || '';
+                const valLower = String(value).toLowerCase();
+                return categoryName.toLowerCase().includes(valLower) ||
+                    departmentName.toLowerCase().includes(valLower);
+            },
+            render: (category, record: any) => category?.name || record.department || '-'
         },
         {
             title: 'Địa điểm',
             dataIndex: 'location',
             key: 'location',
             width: 150,
+            ...getColumnSearchProps('location'),
         },
         {
             title: 'Loại',
             dataIndex: 'type',
             key: 'type',
             width: 120,
+            filters: [
+                { text: 'Toàn thời gian', value: 'full-time' },
+                { text: 'Bán thời gian', value: 'part-time' },
+                { text: 'Hợp đồng', value: 'contract' },
+                { text: 'Thực tập', value: 'internship' },
+            ],
+            onFilter: (value, record: any) => record.type === value,
             render: (type) => {
                 const typeMap = {
                     'full-time': 'Toàn thời gian',
@@ -128,6 +211,12 @@ export default function JobsPage() {
             dataIndex: 'status',
             key: 'status',
             width: 120,
+            filters: [
+                { text: 'Đang tuyển', value: 'active' },
+                { text: 'Tạm dừng', value: 'inactive' },
+                { text: 'Đã đóng', value: 'closed' }
+            ],
+            onFilter: (value, record: any) => record.status === value,
             render: (status, record) => {
                 const statusConfig = {
                     active: { color: 'green', text: 'Đang tuyển' },
@@ -151,6 +240,7 @@ export default function JobsPage() {
             dataIndex: ['_count', 'candidates'],
             key: 'candidates',
             width: 100,
+            sorter: (a: any, b: any) => (a._count?.candidates || 0) - (b._count?.candidates || 0),
             render: (count) => count || 0
         },
         {
@@ -158,6 +248,7 @@ export default function JobsPage() {
             dataIndex: 'publishedAt',
             key: 'publishedAt',
             width: 120,
+            sorter: (a: any, b: any) => dayjs(a.publishedAt).unix() - dayjs(b.publishedAt).unix(),
             render: (date) => date ? dayjs(date).format('DD/MM/YYYY') : '-'
         },
         {
@@ -165,6 +256,11 @@ export default function JobsPage() {
             dataIndex: 'deadline',
             key: 'deadline',
             width: 120,
+            sorter: (a: any, b: any) => {
+                if (!a.deadline) return -1;
+                if (!b.deadline) return 1;
+                return dayjs(a.deadline).unix() - dayjs(b.deadline).unix()
+            },
             render: (date) => {
                 if (!date) return '-'
                 const isExpired = dayjs(date).isBefore(dayjs())
@@ -182,13 +278,17 @@ export default function JobsPage() {
             fixed: 'right' as const,
             render: (_, record) => (
                 <Space>
+                    <Switch
+                        checked={record.status === 'active'}
+                        onChange={() => handleToggleStatus(record)}
+                        size="small"
+                    />
                     <Button
-                        type="link"
+                        type="text"
                         icon={<EditOutlined />}
                         onClick={() => router.push(`/admin/jobs/${record.id}`)}
-                    >
-                        Sửa
-                    </Button>
+                        title="Sửa"
+                    />
                     <Popconfirm
                         title="Xóa việc làm"
                         description="Bạn có chắc muốn xóa việc làm này?"
@@ -196,9 +296,7 @@ export default function JobsPage() {
                         okText="Xóa"
                         cancelText="Hủy"
                     >
-                        <Button type="link" danger icon={<DeleteOutlined />}>
-                            Xóa
-                        </Button>
+                        <Button type="text" danger icon={<DeleteOutlined />} title="Xóa" />
                     </Popconfirm>
                 </Space>
             )
@@ -207,8 +305,7 @@ export default function JobsPage() {
 
     return (
         <div className="flex flex-col gap-4 p-6">
-            <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Quản lý Việc làm</h1>
+            <div className="flex justify-end items-center bg-white p-4 rounded-lg">
                 <Button
                     type="primary"
                     icon={<PlusOutlined />}
@@ -218,44 +315,13 @@ export default function JobsPage() {
                 </Button>
             </div>
 
-            <div className="flex gap-4 items-center bg-white p-4 rounded-lg">
-                <Search
-                    placeholder="Tìm kiếm theo tiêu đề..."
-                    allowClear
-                    style={{ width: 300 }}
-                    onSearch={(value) => setFilters({ ...filters, search: value })}
-                />
-                <Select
-                    style={{ width: 150 }}
-                    value={filters.status}
-                    onChange={(value) => setFilters({ ...filters, status: value })}
-                >
-                    <Select.Option value="all">Tất cả trạng thái</Select.Option>
-                    <Select.Option value="active">Đang tuyển</Select.Option>
-                    <Select.Option value="inactive">Tạm dừng</Select.Option>
-                    <Select.Option value="closed">Đã đóng</Select.Option>
-                </Select>
-                <Select
-                    style={{ width: 150 }}
-                    value={filters.department}
-                    onChange={(value) => setFilters({ ...filters, department: value })}
-                >
-                    <Select.Option value="all">Tất cả phòng ban</Select.Option>
-                    <Select.Option value="Technology">Technology</Select.Option>
-                    <Select.Option value="Marketing">Marketing</Select.Option>
-                    <Select.Option value="Sales">Sales</Select.Option>
-                    <Select.Option value="Design">Design</Select.Option>
-                    <Select.Option value="Human Resources">Human Resources</Select.Option>
-                </Select>
-            </div>
-
             <div className="bg-white rounded-lg">
                 <Table
                     columns={columns}
                     dataSource={jobs}
                     rowKey="id"
                     loading={loading}
-                    scroll={{ x: 1500 }}
+                    scroll={{ x: 1300 }}
                     pagination={{
                         pageSize: 10,
                         showSizeChanger: true,

@@ -30,9 +30,9 @@ export default function AdminLayout({
                 }
             >
                 <AppSidebar variant="inset" />
-                <SidebarInset className="">
+                <SidebarInset className="overflow-x-hidden">
                     <SiteHeader />
-                    <div className="flex flex-1 flex-col">
+                    <div className="flex flex-1 flex-col gap-4 p-4 pt-0 min-w-0">
                         {children}
                     </div>
                 </SidebarInset>

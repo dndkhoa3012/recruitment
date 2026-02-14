@@ -1,23 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Table, Button, Input, Select, Tag, Space, Popconfirm, message } from "antd"
+import { useState, useEffect, useRef } from "react"
+import { Table, Button, Input, Select, Tag, Space, Popconfirm, App } from "antd"
 import { EyeOutlined, DeleteOutlined, SearchOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import dayjs from "dayjs"
 
-const { Search } = Input
+
 
 export default function CandidatesPage() {
+    const { message } = App.useApp()
     const router = useRouter()
     const [candidates, setCandidates] = useState([])
     const [jobs, setJobs] = useState([])
     const [loading, setLoading] = useState(true)
     const [filters, setFilters] = useState({
         status: 'all',
-        jobId: 'all',
-        search: ''
+        jobId: 'all'
     })
 
     const fetchCandidates = async () => {
@@ -26,16 +26,17 @@ export default function CandidatesPage() {
             const params = new URLSearchParams()
             if (filters.status !== 'all') params.append('status', filters.status)
             if (filters.jobId !== 'all') params.append('jobId', filters.jobId)
-            if (filters.search) params.append('search', filters.search)
+
 
             const response = await fetch(`/api/candidates?${params.toString()}`)
             if (!response.ok) {
-                throw new Error('Failed to fetch candidates')
+                const errorData = await response.json()
+                throw new Error(errorData.error || 'Failed to fetch candidates')
             }
             const data = await response.json()
             setCandidates(Array.isArray(data) ? data : [])
         } catch (error) {
-            message.error('Không thể tải danh sách ứng viên')
+            message.error(error.message || 'Không thể tải danh sách ứng viên')
             console.error('Error fetching candidates:', error)
             setCandidates([])
         } finally {
@@ -101,6 +102,81 @@ export default function CandidatesPage() {
         }
     }
 
+    const [searchText, setSearchText] = useState('')
+    const [searchedColumn, setSearchedColumn] = useState('')
+    const searchInput = useRef(null)
+
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm()
+        setSearchText(selectedKeys[0])
+        setSearchedColumn(dataIndex)
+    }
+
+    const handleReset = (clearFilters) => {
+        clearFilters()
+        setSearchText('')
+    }
+
+    const getColumnSearchProps = (dataIndex: string, nestedPath: string[] | null = null) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }: any) => (
+            <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Tìm kiếm`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Tìm
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Xóa
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            close()
+                        }}
+                    >
+                        Đóng
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: (filtered) => (
+            <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+        ),
+        onFilter: (value, record) => {
+            if (nestedPath) {
+                // Handle nested path searching (e.g. ['job', 'title'])
+                const text = nestedPath.reduce((obj, key) => obj && obj[key], record)
+                return text ? text.toString().toLowerCase().includes(value.toLowerCase()) : false
+            }
+            return record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : false
+        },
+        filterDropdownProps: {
+            onOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100)
+                }
+            },
+        },
+    })
+
     const columns = [
         {
             title: 'Họ tên',
@@ -108,6 +184,7 @@ export default function CandidatesPage() {
             key: 'fullName',
             width: 200,
             fixed: 'left' as const,
+            ...getColumnSearchProps('fullName'),
             render: (text, record) => (
                 <Link href={`/admin/candidates/${record.id}`} className="text-blue-600 hover:underline">
                     {text}
@@ -119,30 +196,42 @@ export default function CandidatesPage() {
             dataIndex: 'email',
             key: 'email',
             width: 220,
+            ...getColumnSearchProps('email'),
         },
         {
             title: 'Số điện thoại',
             dataIndex: 'phone',
             key: 'phone',
             width: 130,
+            ...getColumnSearchProps('phone'),
         },
         {
             title: 'Vị trí ứng tuyển',
             dataIndex: ['job', 'title'],
             key: 'jobTitle',
             width: 250,
+            ...getColumnSearchProps('jobTitle', ['job', 'title']),
         },
         {
             title: 'Phòng ban',
-            dataIndex: ['job', 'department'],
+            dataIndex: ['job', 'category', 'name'],
             key: 'department',
             width: 150,
+            render: (text, record: any) => record.job?.category?.name || record.job?.department || '-'
         },
         {
             title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
             width: 150,
+            filters: [
+                { text: 'Chờ xử lý', value: 'pending' },
+                { text: 'Đang xem xét', value: 'reviewing' },
+                { text: 'Đã phỏng vấn', value: 'interviewed' },
+                { text: 'Đã chấp nhận', value: 'accepted' },
+                { text: 'Từ chối', value: 'rejected' },
+            ],
+            onFilter: (value: any, record: any) => record.status === value,
             render: (status, record) => {
                 const statusConfig = {
                     pending: { color: 'default', text: 'Chờ xử lý' },
@@ -157,6 +246,7 @@ export default function CandidatesPage() {
                         value={status}
                         style={{ width: '100%' }}
                         onChange={(value) => handleStatusChange(record.id, value)}
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <Select.Option value="pending">Chờ xử lý</Select.Option>
                         <Select.Option value="reviewing">Đang xem xét</Select.Option>
@@ -177,17 +267,16 @@ export default function CandidatesPage() {
         {
             title: 'Hành động',
             key: 'actions',
-            width: 150,
+            width: 100,
             fixed: 'right' as const,
             render: (_, record) => (
                 <Space>
                     <Button
-                        type="link"
+                        type="text"
                         icon={<EyeOutlined />}
                         onClick={() => router.push(`/admin/candidates/${record.id}`)}
-                    >
-                        Xem
-                    </Button>
+                        title="Xem chi tiết"
+                    />
                     <Popconfirm
                         title="Xóa ứng viên"
                         description="Bạn có chắc muốn xóa ứng viên này?"
@@ -195,9 +284,7 @@ export default function CandidatesPage() {
                         okText="Xóa"
                         cancelText="Hủy"
                     >
-                        <Button type="link" danger icon={<DeleteOutlined />}>
-                            Xóa
-                        </Button>
+                        <Button type="text" danger icon={<DeleteOutlined />} title="Xóa" />
                     </Popconfirm>
                 </Space>
             )
@@ -206,41 +293,6 @@ export default function CandidatesPage() {
 
     return (
         <div className="flex flex-col gap-4 p-6">
-            <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Quản lý Ứng viên</h1>
-            </div>
-
-            <div className="flex gap-4 items-center bg-white p-4 rounded-lg">
-                <Search
-                    placeholder="Tìm kiếm theo tên, email, SĐT..."
-                    allowClear
-                    style={{ width: 350 }}
-                    onSearch={(value) => setFilters({ ...filters, search: value })}
-                />
-                <Select
-                    style={{ width: 150 }}
-                    value={filters.status}
-                    onChange={(value) => setFilters({ ...filters, status: value })}
-                >
-                    <Select.Option value="all">Tất cả trạng thái</Select.Option>
-                    <Select.Option value="pending">Chờ xử lý</Select.Option>
-                    <Select.Option value="reviewing">Đang xem xét</Select.Option>
-                    <Select.Option value="interviewed">Đã phỏng vấn</Select.Option>
-                    <Select.Option value="accepted">Đã chấp nhận</Select.Option>
-                    <Select.Option value="rejected">Từ chối</Select.Option>
-                </Select>
-                <Select
-                    style={{ width: 200 }}
-                    value={filters.jobId}
-                    onChange={(value) => setFilters({ ...filters, jobId: value })}
-                >
-                    <Select.Option value="all">Tất cả vị trí</Select.Option>
-                    {jobs.map(job => (
-                        <Select.Option key={job.id} value={job.id}>{job.title}</Select.Option>
-                    ))}
-                </Select>
-            </div>
-
             <div className="bg-white rounded-lg">
                 <Table
                     columns={columns}

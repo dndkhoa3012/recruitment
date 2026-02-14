@@ -85,9 +85,21 @@ function ApplyContent() {
         setLoading(true);
 
         try {
-            // In a real application, you would upload the file to a storage service
-            // and get back a URL. For now, we'll simulate this.
-            const resumeUrl = URL.createObjectURL(formData.resume);
+            // Upload resume
+            const formDataUpload = new FormData();
+            formDataUpload.append('file', formData.resume);
+
+            const uploadResponse = await fetch('/api/upload', {
+                method: 'POST',
+                body: formDataUpload
+            });
+
+            if (!uploadResponse.ok) {
+                throw new Error('Failed to upload resume');
+            }
+
+            const uploadResult = await uploadResponse.json();
+            const resumeUrl = uploadResult.url;
 
             const response = await fetch('/api/candidates', {
                 method: 'POST',
@@ -99,7 +111,7 @@ function ApplyContent() {
                     email: formData.email,
                     phone: formData.phone,
                     jobId: formData.jobId,
-                    resume: resumeUrl, // In production, upload file and use actual URL
+                    resume: resumeUrl,
                     coverLetter: formData.coverLetter,
                 }),
             });
