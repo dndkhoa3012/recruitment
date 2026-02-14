@@ -19,7 +19,7 @@ cd recruitment
 
 ## 3. Cập Nhật & Khởi Động Lại
 Chạy **duy nhất** 2 lệnh này để lấy code mới và chạy lại (Web sẽ tự động Build lại):
-
+``cd /var/www/recruitment``
 ```bash
 # 1. Lấy code mới nhất từ GitHub
 git pull origin main
