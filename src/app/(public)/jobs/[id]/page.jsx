@@ -97,17 +97,21 @@ export default function JobDetailPage() {
                             </div>
                             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">{job.title}</h2>
                             <p className="text-gray-600 dark:text-gray-400 font-medium mb-4">{job.department || job.category?.name}</p>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                    <span className="material-symbols-outlined text-[#13a4ec]">location_on</span>
+                            <div className="flex flex-wrap gap-4 mt-4">
+                                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-700">
+                                    <span className="material-symbols-outlined text-[#13a4ec] text-[20px]">location_on</span>
                                     <span>{job.location}</span>
                                 </div>
                                 {job.salary && (
-                                    <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                        <span className="material-symbols-outlined text-[#13a4ec]">payments</span>
+                                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-700">
+                                        <span className="material-symbols-outlined text-[#13a4ec] text-[20px]">payments</span>
                                         <span className="font-semibold text-gray-900 dark:text-white">{job.salary}</span>
                                     </div>
                                 )}
+                                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-700">
+                                    <span className="material-symbols-outlined text-[#13a4ec] text-[20px]">group</span>
+                                    <span>Số lượng: <span className="font-semibold text-gray-900 dark:text-white">{job.quantity || 1}</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>

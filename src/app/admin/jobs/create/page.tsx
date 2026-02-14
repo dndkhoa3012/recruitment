@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Form, Input, Select, DatePicker, Button, App, Alert } from "antd"
+import { Form, Input, Select, DatePicker, Button, App, Alert, InputNumber } from "antd"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import dayjs from "dayjs"
@@ -145,6 +145,15 @@ export default function CreateJobPage() {
                             name="salary"
                         >
                             <Input placeholder="VD: 20-30 triệu VNĐ" />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Số lượng tuyển"
+                            name="quantity"
+                            initialValue={1}
+                            rules={[{ required: true, message: 'Vui lòng nhập số lượng' }]}
+                        >
+                            <InputNumber min={1} style={{ width: '100%' }} placeholder="VD: 5" />
                         </Form.Item>
                     </div>
 

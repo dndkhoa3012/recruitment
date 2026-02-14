@@ -31,6 +31,7 @@ model Job {
   location    String   // Work location
   type        String   @default("full-time") // full-time, part-time, contract, internship
   salary      String?  // Salary range (e.g., "15-20 triệu VNĐ")
+  quantity    Int      @default(1) // Number of vacancies
   description String?  @db.Text // Job description
   requirements String? @db.Text // Job requirements
   benefits    String?  @db.Text // Benefits

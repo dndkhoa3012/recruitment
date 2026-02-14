@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Table, Button, App, Popconfirm, Input, Tag } from 'antd';
+import { useState, useEffect, useRef } from 'react';
+import { Table, Button, App, Popconfirm, Input, Tag, Space } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -11,7 +11,11 @@ export default function CategoriesPage() {
     const router = useRouter();
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Search states
     const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+    const searchInput = useRef(null);
 
     useEffect(() => {
         fetchCategories();
@@ -54,16 +58,79 @@ export default function CategoriesPage() {
         }
     };
 
-    const filteredCategories = categories.filter((cat: any) =>
-        cat.name.toLowerCase().includes(searchText.toLowerCase()) ||
-        (cat.description && cat.description.toLowerCase().includes(searchText.toLowerCase()))
-    );
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
+
+    const handleReset = (clearFilters) => {
+        clearFilters();
+        setSearchText('');
+    };
+
+    const getColumnSearchProps = (dataIndex: string) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }: any) => (
+            <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Tìm kiếm`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Tìm
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Xóa
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            close();
+                        }}
+                    >
+                        Đóng
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: (filtered) => (
+            <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+        ),
+        onFilter: (value, record) =>
+            record[dataIndex]
+                ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+                : false,
+        filterDropdownProps: {
+            onOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
+        },
+    });
 
     const columns = [
         {
             title: 'Tên danh mục',
             dataIndex: 'name',
             key: 'name',
+            ...getColumnSearchProps('name'),
             render: (text: string, record: any) => (
                 <div>
                     <div className="font-semibold">{text}</div>
@@ -141,20 +208,9 @@ export default function CategoriesPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow">
-                <div className="p-4 border-b">
-                    <Input
-                        placeholder="Tìm kiếm danh mục..."
-                        prefix={<SearchOutlined />}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        className="max-w-md"
-                        size="large"
-                    />
-                </div>
-
                 <Table
                     columns={columns}
-                    dataSource={filteredCategories}
+                    dataSource={categories} // Use categories directly
                     rowKey="id"
                     loading={loading}
                     pagination={{
