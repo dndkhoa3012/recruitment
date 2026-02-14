@@ -29,11 +29,15 @@ export default function CandidatesPage() {
             if (filters.search) params.append('search', filters.search)
 
             const response = await fetch(`/api/candidates?${params.toString()}`)
+            if (!response.ok) {
+                throw new Error('Failed to fetch candidates')
+            }
             const data = await response.json()
-            setCandidates(data)
+            setCandidates(Array.isArray(data) ? data : [])
         } catch (error) {
             message.error('Không thể tải danh sách ứng viên')
             console.error('Error fetching candidates:', error)
+            setCandidates([])
         } finally {
             setLoading(false)
         }
@@ -42,10 +46,14 @@ export default function CandidatesPage() {
     const fetchJobs = async () => {
         try {
             const response = await fetch('/api/jobs')
+            if (!response.ok) {
+                throw new Error('Failed to fetch jobs')
+            }
             const data = await response.json()
-            setJobs(data)
+            setJobs(Array.isArray(data) ? data : [])
         } catch (error) {
             console.error('Error fetching jobs:', error)
+            setJobs([])
         }
     }
 

@@ -28,11 +28,15 @@ export default function JobsPage() {
             if (filters.search) params.append('search', filters.search)
 
             const response = await fetch(`/api/jobs?${params.toString()}`)
+            if (!response.ok) {
+                throw new Error('Failed to fetch jobs')
+            }
             const data = await response.json()
-            setJobs(data)
+            setJobs(Array.isArray(data) ? data : [])
         } catch (error) {
             message.error('Không thể tải danh sách việc làm')
             console.error('Error fetching jobs:', error)
+            setJobs([])
         } finally {
             setLoading(false)
         }
