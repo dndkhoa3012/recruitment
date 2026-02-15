@@ -138,6 +138,24 @@ const data = {
 export function AppSidebar({
   ...props
 }) {
+  const [user, setUser] = React.useState(data.user);
+
+  React.useEffect(() => {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser({
+          name: parsedUser.username || "Admin",
+          email: `${parsedUser.username || "admin"}@johntours.com`,
+          avatar: "/avatars/shadcn.jpg",
+        });
+      } catch (e) {
+        console.error("Failed to parse user data", e);
+      }
+    }
+  }, []);
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -159,7 +177,7 @@ export function AppSidebar({
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );
