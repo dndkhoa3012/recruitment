@@ -18,7 +18,7 @@ export async function GET(request: Request) {
         }
 
         if (categoryId && categoryId !== 'all') {
-            where.categoryId = categoryId
+            where.categoryId = Number(categoryId)
         }
 
         if (search) {

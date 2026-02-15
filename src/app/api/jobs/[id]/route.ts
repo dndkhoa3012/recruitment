@@ -11,7 +11,7 @@ export async function GET(
     try {
         const params = await props.params;
         const job = await prisma.job.findUnique({
-            where: { id: params.id },
+            where: { id: Number(params.id) },
             include: {
                 candidates: {
                     orderBy: { appliedAt: 'desc' }
@@ -46,7 +46,7 @@ export async function PUT(
         const body = await request.json()
 
         const job = await prisma.job.update({
-            where: { id: params.id },
+            where: { id: Number(params.id) },
             data: {
                 ...body,
                 deadline: body.deadline ? new Date(body.deadline) : null
@@ -71,7 +71,7 @@ export async function DELETE(
     try {
         const params = await props.params;
         await prisma.job.delete({
-            where: { id: params.id }
+            where: { id: Number(params.id) }
         })
 
         return NextResponse.json({ message: 'Job deleted successfully' })

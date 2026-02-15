@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         }
 
         if (jobId && jobId !== 'all') {
-            where.jobId = jobId
+            where.jobId = Number(jobId)
         }
 
         if (search) {

@@ -11,7 +11,7 @@ export async function GET(
     try {
         const params = await props.params;
         const category = await prisma.category.findUnique({
-            where: { id: params.id },
+            where: { id: Number(params.id) },
             include: {
                 jobs: {
                     select: {
@@ -55,7 +55,7 @@ export async function PUT(
 
         // Check if category exists
         const existing = await prisma.category.findUnique({
-            where: { id: params.id }
+            where: { id: Number(params.id) }
         });
 
         if (!existing) {
@@ -70,7 +70,7 @@ export async function PUT(
             const duplicate = await prisma.category.findFirst({
                 where: {
                     AND: [
-                        { id: { not: params.id } },
+                        { id: { not: Number(params.id) } },
                         {
                             OR: [
                                 name ? { name } : {},
@@ -90,7 +90,7 @@ export async function PUT(
         }
 
         const category = await prisma.category.update({
-            where: { id: params.id },
+            where: { id: Number(params.id) },
             data: {
                 ...(name && { name }),
                 ...(slug && { slug }),
@@ -118,7 +118,7 @@ export async function DELETE(
 
         // Check if category has jobs
         const category = await prisma.category.findUnique({
-            where: { id: params.id },
+            where: { id: Number(params.id) },
             include: {
                 _count: {
                     select: { jobs: true }
@@ -141,7 +141,7 @@ export async function DELETE(
         }
 
         await prisma.category.delete({
-            where: { id: params.id }
+            where: { id: Number(params.id) }
         });
 
         return NextResponse.json({ success: true });

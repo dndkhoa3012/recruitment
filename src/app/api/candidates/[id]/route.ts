@@ -12,7 +12,7 @@ export async function GET(
         const params = await props.params;
         const candidate = await prisma.candidate.findFirst({
             where: {
-                id: params.id,
+                id: Number(params.id),
                 deletedAt: null
             },
             include: {
@@ -51,7 +51,7 @@ export async function PUT(
         const body = await request.json()
 
         const candidate = await prisma.candidate.update({
-            where: { id: params.id },
+            where: { id: Number(params.id) },
             data: body
         })
 
@@ -73,7 +73,7 @@ export async function DELETE(
     try {
         const params = await props.params;
         await prisma.candidate.update({
-            where: { id: params.id },
+            where: { id: Number(params.id) },
             data: {
                 deletedAt: new Date()
             }

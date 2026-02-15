@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Category {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   name        String   @unique
   slug        String   @unique
   description String?  @db.Text
@@ -23,10 +23,10 @@ model Category {
 }
 
 model Job {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   title       String   // Job title
   department  String?  // Department/Category (legacy - will be replaced by categoryId)
-  categoryId  String?  // Category relationship
+  categoryId  Int?     // Category relationship
   category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   location    String   // Work location
   type        String   @default("full-time") // full-time, part-time, contract, internship
@@ -48,7 +48,7 @@ model Job {
 }
 
 model Candidate {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   fullName    String   // Full name
   email       String   // Email
   phone       String   // Phone number
@@ -57,7 +57,7 @@ model Candidate {
   status      String   @default("pending") // pending, reviewing, interviewed, accepted, rejected
   appliedAt   DateTime @default(now())
   
-  jobId       String
+  jobId       Int
   job         Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   
   createdAt   DateTime @default(now())
@@ -69,7 +69,7 @@ model Candidate {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   username  String   @unique
   password  String   // Hashed password
   role      String   @default("admin") // admin, editor
