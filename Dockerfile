@@ -8,7 +8,8 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 # Configure npm for better network resilience
-RUN npm config set fetch-retry-mintimeout 20000 && \
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
     npm config set fetch-retries 5 && \
     npm config set fetch-timeout 300000
@@ -32,7 +33,8 @@ WORKDIR /app
 
 # Install production dependencies only
 COPY package*.json ./
-RUN npm config set fetch-retry-mintimeout 20000 && \
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
     npm config set fetch-retries 5 && \
     npm config set fetch-timeout 300000 && \
