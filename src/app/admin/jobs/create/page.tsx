@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Form, Input, Select, DatePicker, Button, App, Alert, InputNumber } from "antd"
 import { useRouter } from "next/navigation"
+import { ArrowLeftOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import dayjs from "dayjs"
 import DescriptionEditor from "@/components/admin/DescriptionEditor"
@@ -63,7 +64,14 @@ export default function CreateJobPage() {
 
     return (
         <div className="p-6">
-
+            <div className="mb-6">
+                <Button
+                    icon={<ArrowLeftOutlined />}
+                    onClick={() => router.back()}
+                >
+                    Quay lại
+                </Button>
+            </div>
 
             <div className="bg-white p-6 rounded-lg max-w-4xl">
                 <Form
