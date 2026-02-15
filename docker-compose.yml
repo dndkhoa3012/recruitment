@@ -39,7 +39,7 @@ services:
       db:
         condition: service_healthy
     command: >
-      sh -c "npx prisma migrate deploy && npm start"
+      sh -c "npx prisma migrate deploy && node prisma/seed-prod.js && npm start"
 
 volumes:
   mysql_data:
