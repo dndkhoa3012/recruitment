@@ -9,6 +9,7 @@ services:
       MYSQL_DATABASE: recruitment_db
       MYSQL_USER: recruitment
       MYSQL_PASSWORD: RecruitPass2024
+      TZ: Asia/Ho_Chi_Minh
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
@@ -31,6 +32,7 @@ services:
       PORT: 3000
       NEXTAUTH_SECRET: "phuquoctrip-recruitment-secret-2024-very-long-and-secure"
       NEXTAUTH_URL: "https://tuyendung.phuquoctrip.com"
+      TZ: Asia/Ho_Chi_Minh
     ports:
       - "3010:3000"
     depends_on:
