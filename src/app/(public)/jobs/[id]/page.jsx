@@ -42,6 +42,22 @@ export default function JobDetailPage() {
                     benefits = [];
                 }
 
+                // Filter out empty/whitespace-only items
+                if (description.points) {
+                    description.points = description.points.filter(p => p && p.trim());
+                }
+                if (description.intro) {
+                    description.intro = description.intro.trim() || '';
+                }
+                requirements = requirements.filter(r => {
+                    if (typeof r === 'string') return r.trim();
+                    return r && r.text && r.text.trim();
+                });
+                benefits = benefits.filter(b => {
+                    if (typeof b === 'string') return b.trim();
+                    return b && b.text && b.text.trim();
+                });
+
                 setJob({ ...data, description, requirements, benefits });
                 setLoading(false);
             } catch (error) {
@@ -74,7 +90,7 @@ export default function JobDetailPage() {
     return (
         <>
             {/* Main Content */}
-            <main className="max-w-4xl mx-auto px-4 py-8 pb-32">
+            <main className="max-w-4xl mx-auto px-4 py-8 pb-28">
                 {/* Job Header Section */}
                 <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm mb-6 border border-gray-100 dark:border-gray-800">
                     <div className="flex flex-col md:flex-row gap-6 items-start">

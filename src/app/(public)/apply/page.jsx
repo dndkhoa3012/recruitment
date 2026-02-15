@@ -153,7 +153,7 @@ function ApplyContent() {
                 </svg>
             </div>
 
-            <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] border border-gray-100">
+            <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl flex flex-col md:max-h-[90vh] border border-gray-100">
                 {/* Header */}
                 <div className="px-8 pt-6 pb-3 flex justify-between items-start flex-shrink-0">
                     <div>

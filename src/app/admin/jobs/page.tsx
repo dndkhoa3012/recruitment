@@ -304,7 +304,7 @@ export default function JobsPage() {
     ]
 
     return (
-        <div className="flex flex-col gap-4 p-6">
+        <div className="flex flex-col gap-4 p-3 md:p-6">
             <div className="flex justify-end items-center bg-white p-4 rounded-lg">
                 <Button
                     type="primary"

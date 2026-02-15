@@ -52,7 +52,7 @@ export default function CandidateDetailPage() {
     const config = statusConfig[candidate.status] || { color: 'default', text: candidate.status }
 
     return (
-        <div className="p-6">
+        <div className="p-3 md:p-6">
             <div className="mb-6">
                 <Button
                     icon={<ArrowLeftOutlined />}
@@ -65,7 +65,7 @@ export default function CandidateDetailPage() {
 
             <div className="max-w-4xl space-y-4">
                 <Card title="Thông tin cá nhân" className="shadow-sm">
-                    <Descriptions column={2} bordered>
+                    <Descriptions column={{ xs: 1, sm: 2 }} bordered>
                         <Descriptions.Item label="Họ tên" span={2}>
                             <span className="font-semibold">{candidate.fullName}</span>
                         </Descriptions.Item>

@@ -52,7 +52,7 @@ export default function HomePage() {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                             </div>
                             {/* Floating Cards */}
-                            <div className="absolute -bottom-6 -left-6 bg-white dark:bg-[#101c22] p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4 max-w-[240px]">
+                            <div className="hidden lg:flex absolute -bottom-6 -left-6 bg-white dark:bg-[#101c22] p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 items-center gap-4 max-w-[240px]">
                                 <div className="size-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
                                     <span className="material-symbols-outlined">payments</span>
                                 </div>
@@ -61,7 +61,7 @@ export default function HomePage() {
                                     <p className="text-sm font-bold dark:text-white">Cạnh tranh & hấp dẫn</p>
                                 </div>
                             </div>
-                            <div className="absolute -top-6 -right-6 bg-white dark:bg-[#101c22] p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4 max-w-[240px]">
+                            <div className="hidden lg:flex absolute -top-6 -right-6 bg-white dark:bg-[#101c22] p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 items-center gap-4 max-w-[240px]">
                                 <div className="size-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center shrink-0">
                                     <span className="material-symbols-outlined">rocket_launch</span>
                                 </div>
@@ -73,7 +73,7 @@ export default function HomePage() {
                         </div>
                     </div>
                     {/* Features Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 lg:mt-24">
                         <div className="flex flex-col gap-4 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-white/5 p-8 hover:shadow-lg transition-shadow">
                             <div className="size-12 rounded-xl bg-[#13a4ec]/10 text-[#13a4ec] flex items-center justify-center">
                                 <span className="material-symbols-outlined text-3xl">groups</span>

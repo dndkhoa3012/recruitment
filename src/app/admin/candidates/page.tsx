@@ -292,7 +292,7 @@ export default function CandidatesPage() {
     ]
 
     return (
-        <div className="flex flex-col gap-4 p-6">
+        <div className="flex flex-col gap-4 p-3 md:p-6">
             <div className="bg-white rounded-lg">
                 <Table
                     columns={columns}

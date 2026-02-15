@@ -68,7 +68,7 @@ export default function CreateJobPage() {
     }
 
     return (
-        <div className="p-6">
+        <div className="p-3 md:p-6">
             <div className="mb-6">
                 <Button
                     icon={<ArrowLeftOutlined />}
@@ -78,7 +78,7 @@ export default function CreateJobPage() {
                 </Button>
             </div>
 
-            <div className="bg-white p-6 rounded-lg max-w-4xl">
+            <div className="bg-white p-4 md:p-6 rounded-lg max-w-4xl">
                 <Form
                     form={form}
                     layout="vertical"
@@ -99,7 +99,7 @@ export default function CreateJobPage() {
                         <Input placeholder="VD: Nhân viên kinh doanh" />
                     </Form.Item>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Form.Item
                             label="Danh mục"
                             name="categoryId"
