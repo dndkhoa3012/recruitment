@@ -11,6 +11,16 @@ export function middleware(request: NextRequest) {
             // Redirect to login page if no token
             return NextResponse.redirect(new URL('/login', request.url))
         }
+
+        // Token exists, refresh session (sliding expiration)
+        const response = NextResponse.next()
+        response.cookies.set('auth_token', token.value, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 60 * 60 // 1 hour
+        })
+        return response
     }
 
     return NextResponse.next()
