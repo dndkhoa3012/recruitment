@@ -102,15 +102,6 @@ export default function AdminLoginPage() {
                             </Button>
                         </Form.Item>
                     </Form>
-
-                    {/* Footer */}
-                    <div className="text-center mt-6">
-                        <Link href="#" className="text-slate-500 hover:text-green-600 text-sm transition-colors">
-                            Quên mật khẩu?
-                        </Link>
-
-
-                    </div>
                 </div>
             </div>
         </div>

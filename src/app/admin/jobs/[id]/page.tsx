@@ -152,6 +152,7 @@ export default function EditJobPage() {
                         <Form.Item
                             label="Danh mục"
                             name="categoryId"
+                            rules={[{ required: true, message: 'Vui lòng chọn danh mục' }]}
                         >
                             <Select
                                 placeholder="Chọn danh mục"

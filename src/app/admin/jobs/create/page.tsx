@@ -27,6 +27,11 @@ export default function CreateJobPage() {
             if (response.ok) {
                 const data = await response.json()
                 setCategories(data)
+
+                // Auto-select if only one category
+                if (data.length === 1) {
+                    form.setFieldValue('categoryId', data[0].id)
+                }
             }
         } catch (error) {
             console.error('Error fetching categories:', error)
@@ -98,6 +103,7 @@ export default function CreateJobPage() {
                         <Form.Item
                             label="Danh mục"
                             name="categoryId"
+                            rules={[{ required: true, message: 'Vui lòng chọn danh mục' }]}
                         >
                             <Select
                                 placeholder="Chọn danh mục"
