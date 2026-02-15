@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Form, Input, Button, message, Spin } from 'antd';
+import { Form, Input, Button, App, Spin } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import Link from 'next/link';
 const { TextArea } = Input;
 
 export default function EditCategoryPage() {
+    const { message } = App.useApp();
     const router = useRouter();
     const params = useParams();
     const [form] = Form.useForm();

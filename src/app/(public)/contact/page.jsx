@@ -9,7 +9,7 @@ export default function ContactPage() {
                 <div className="px-4 md:px-10 flex flex-1 justify-center">
                     <div className="layout-content-container flex flex-col max-w-[1200px] flex-1 text-center items-center">
                         <h1 className="text-slate-900 text-4xl md:text-6xl font-black leading-tight tracking-[-0.02em] mb-6">
-                            Liên Hệ <span className="text-primary">Airwaves</span>
+                            Liên Hệ <span className="text-primary">John's Tours</span>
                         </h1>
                         <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
                             Để lại tin nhắn hoặc ghé thăm chúng tôi trực tiếp.

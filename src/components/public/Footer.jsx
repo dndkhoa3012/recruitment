@@ -9,17 +9,9 @@ export default function Footer() {
                 <div className="px-4 md:px-10 w-full max-w-[1200px] grid grid-cols-1 md:grid-cols-4 gap-12 mb-10">
                     <div className="col-span-1 md:col-span-1 flex flex-col gap-6">
                         <div className="flex items-center gap-2 text-slate-900">
-                            <img src="/logo.png" alt="Airwave Beach Club" className="h-16 w-auto object-contain" />
+                            <img src="/johns-tours-logo.png" alt="John's Tours Recruitment" className="h-16 w-auto object-contain" />
                         </div>
-                        <p className="text-slate-500 text-sm leading-relaxed">Điểm đến giải trí hàng đầu tại Phú Quốc, nơi cảm xúc thăng hoa cùng sóng biển.</p>
-                        <div className="flex gap-4">
-                            <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all shadow-sm" href="https://www.facebook.com/airwavesbeachclub" target="_blank" rel="noopener noreferrer">
-                                <FacebookFilled style={{ fontSize: '18px' }} />
-                            </a>
-                            <a className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#E4405F] hover:border-[#E4405F] hover:text-white transition-all shadow-sm" href="#">
-                                <InstagramOutlined style={{ fontSize: '18px' }} />
-                            </a>
-                        </div>
+                        <p className="text-slate-500 text-sm leading-relaxed">Tuyển dụng nhân sự du lịch tại Phú Quốc, nơi phát triển sự nghiệp cùng John's Tours.</p>
                     </div>
 
                     <div className="col-span-1">
@@ -58,7 +50,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="w-full max-w-[1200px] px-4 md:px-10 border-t border-slate-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-slate-400 text-xs font-medium">© 2026 Airwaves Beach Club. All rights reserved.</p>
+                    <p className="text-slate-400 text-xs font-medium">© {new Date().getFullYear()} John's Tours. All rights reserved.</p>
                     <div className="flex gap-8 text-slate-400 text-xs font-medium">
                         <a className="hover:text-slate-900 transition-colors hover-underline" href="#">Điều khoản</a>
                         <a className="hover:text-slate-900 transition-colors hover-underline" href="#">Chính sách bảo mật</a>

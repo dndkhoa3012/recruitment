@@ -1,16 +1,15 @@
 "use client";
-import React from 'react';
+import { useState } from 'react';
 import { GravityStars } from '@/components/public/GravityStars';
-import { Input, Button, Form } from 'antd';
+import { Input, Button, Form, App } from 'antd';
 import { LockOutlined, UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import { App } from 'antd';
 import Link from 'next/link';
 
 export default function AdminLoginPage() {
     const router = useRouter();
     const { message } = App.useApp();
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = useState(false);
 
     const onFinish = async (values) => {
         setLoading(true);
@@ -57,7 +56,7 @@ export default function AdminLoginPage() {
 
                     {/* Header */}
                     <div className="flex flex-col items-center mb-10 text-center">
-                        <img src="/logo-new.png" alt="Airwaves" className="h-24" />
+                        <img src="/johns-tours-logo.png" alt="John's Tours" className="h-24 object-contain" />
                     </div>
 
                     {/* Form */}

@@ -61,7 +61,6 @@ export default function CandidateDetailPage() {
                 >
                     Quay lại
                 </Button>
-                <h1 className="text-2xl font-bold">Chi tiết ứng viên</h1>
             </div>
 
             <div className="max-w-4xl space-y-4">

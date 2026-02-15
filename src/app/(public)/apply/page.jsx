@@ -2,7 +2,6 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { App } from 'antd';
 
 export const dynamic = 'force-dynamic';
