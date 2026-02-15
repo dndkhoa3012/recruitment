@@ -2,12 +2,14 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { message } from 'antd';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { App } from 'antd';
 
 export const dynamic = 'force-dynamic';
 
 function ApplyContent() {
     const router = useRouter();
+    const { message } = App.useApp();
     const searchParams = useSearchParams();
     const jobId = searchParams.get('jobId');
 
