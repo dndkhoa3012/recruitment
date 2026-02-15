@@ -7,8 +7,14 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Install dependencies
-RUN npm ci
+# Configure npm for better network resilience
+RUN npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set fetch-retries 5 && \
+    npm config set fetch-timeout 300000
+
+# Install dependencies with retry logic
+RUN npm ci || npm ci || npm ci
 
 # Copy source code
 COPY . .
@@ -26,7 +32,11 @@ WORKDIR /app
 
 # Install production dependencies only
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set fetch-retries 5 && \
+    npm config set fetch-timeout 300000 && \
+    (npm ci --only=production || npm ci --only=production || npm ci --only=production)
 
 # Copy built application from builder
 COPY --from=builder /app/.next ./.next
