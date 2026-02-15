@@ -70,3 +70,11 @@ docker compose down
 docker compose up -d --build
 
 ssh -t root@103.159.50.249 "cd /var/www/recruitment && docker compose exec db mysql -u recruitment -pRecruitPass2024 recruitment_db -e \"INSERT INTO User (id, username, password, role, createdAt, updatedAt) VALUES (UUID(), 'admin', 'admin123', 'admin', NOW(), NOW());\" && echo '✅ Created Admin User'"
+
+# 9. Tắt server
+docker compose down
+
+# 10. Chạy lại server
+docker compose up -d --build
+
+ssh root@103.159.50.249 "cd /var/www/recruitment && docker compose down --remove-orphans && docker compose up -d && echo '✅ All services restarted'"
