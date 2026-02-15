@@ -13,24 +13,6 @@ git push origin main
 
 # 2. Connect to VPS and deploy
 echo "CONN Connecting to VPS..."
-ssh $VPS_USER@$VPS_IP << EOF
-    set -e
-    
-    echo "📂 Navigating to application directory..."
-    cd $APP_DIR
-    
-    echo "⬇️ Pulling latest changes..."
-    git pull origin main
-    
-    echo "🏗️ Building and starting containers..."
-    # Ensure dependencies are installed if package.json changed (optional but good for safety)
-    # But since we use docker, we just rebuild
-    docker compose up -d --build
-    
-    echo "🧹 Cleaning up unused images..."
-    docker image prune -f
-    
-    echo "✅ Remote deployment finished!"
-EOF
+ssh -t $VPS_USER@$VPS_IP "cd $APP_DIR && git pull origin main && docker compose up -d --build && docker image prune -f"
 
 echo "🎉 Deployment complete!"
