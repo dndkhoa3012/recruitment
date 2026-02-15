@@ -29,6 +29,20 @@ docker compose up -d --build
 ```
 *(Lệnh này sẽ tự động chạy `npm install` và `prisma migrate` nếu cần)*
 
+### Nếu gặp lỗi "npm error code ECONNRESET"
+Đây là lỗi mạng khi tải dependencies. Dockerfile đã được cấu hình để tự động retry, nhưng nếu vẫn lỗi:
+
+**Giải pháp 1:** Chạy lại lệnh build (thường sẽ thành công lần 2-3)
+```bash
+docker compose up -d --build
+```
+
+**Giải pháp 2:** Xóa cache Docker và build lại từ đầu
+```bash
+docker system prune -a
+docker compose up -d --build
+```
+
 ---
 **Lưu ý:**
 - Anh **KHÔNG** cần chỉnh sửa Nginx nữa (trừ khi đổi tên miền).
